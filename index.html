@@ -3,28 +3,142 @@
 <head>
     <title>24点解法计算器</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        .input-group { margin: 10px 0; }
-        input { width: 50px; margin: 0 5px; padding: 5px; }
-        button { padding: 8px 15px; background: #007bff; color: white; border: none; cursor: pointer; }
-        button:hover { background: #0056b3; }
-        #result { margin-top: 20px; }
+        :root {
+            --primary: #4A90E2;
+            --secondary: #6C5CE7;
+            --background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            min-height: 100vh;
+            background: var(--background);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 600px;
+            transition: transform 0.3s ease;
+        }
+
+        h2 {
+            color: #2d3436;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            font-size: 2.2rem;
+        }
+
+        .input-group {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(74, 144, 226, 0.2);
+        }
+
+        input::placeholder {
+            color: #bdbdbd;
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+        }
+
+        #result {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            line-height: 1.6;
+        }
+
+        .solution-item {
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+            .input-group {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
     </style>
 </head>
 <body>
-    <h2>24点解法计算器</h2>
-    <div class="input-group">
-        <input type="number" id="num1" required>
-        <input type="number" id="num2" required>
-        <input type="number" id="num3" required>
-        <input type="number" id="num4" required>
+    <div class="container">
+        <h2>🎮 24点游戏解法计算器</h2>
+        <div class="input-group">
+            <input type="number" id="num1" placeholder="数字" required>
+            <input type="number" id="num2" placeholder="数字" required>
+            <input type="number" id="num3" placeholder="数字" required>
+            <input type="number" id="num4" placeholder="数字" required>
+        </div>
+        <button onclick="calculate()">立即计算</button>
+        <div id="result"></div>
     </div>
-    <button onclick="calculate()">计算解法</button>
-    <div id="result"></div>
 
     <script>
-        function permute(arr) {
+       function permute(arr) {
             const result = [];
             const used = new Array(arr.length).fill(false);
             function backtrack(path) {
@@ -101,17 +215,15 @@
             resultDiv.innerHTML = '';
             
             if (nums.some(isNaN)) {
-                resultDiv.innerHTML = '请输入四个有效整数';
+                resultDiv.innerHTML = '<div class="solution-item error">⚠️ 请输入四个有效整数</div>';
                 return;
             }
 
             const solutions = find24Solutions(nums);
-            if (solutions.length > 0) {
-                resultDiv.innerHTML = '<strong>找到的解法如下：</strong><br>' + 
-                    solutions.map((sol, idx) => `${idx+1}. ${sol}`).join('<br>');
-            } else {
-                resultDiv.innerHTML = '无法找到解法';
-            }
+            resultDiv.innerHTML = solutions.length > 0 
+                    ? '<strong>🎉 找到的解法：</strong>' + 
+                      solutions.map((sol, idx) => `<div class="solution-item">${idx+1}. ${sol}</div>`).join('')
+                    : '<div class="solution-item">😞 未能找到有效解法</div>';
         }
     </script>
 </body>
