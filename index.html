@@ -7,7 +7,7 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>仿k.ilib.io/u/clock.html</title>
+    <title>时钟</title>
     <style>
         body {
             text-align: center;
@@ -24,8 +24,8 @@
 </head>
 
 <body>
-    <p id="time">下午 10:25:09</p>
-    <p id="date">10月16日 星期六</p>
+    <p id="time"></p>
+    <p id="date"></p>
 
     <script>
         function refresh() {
@@ -35,7 +35,7 @@
 
             var amOrPm = ["上午", "下午"];
             var hour = d.getHours() - Math.floor(d.getHours() / 13) * 12;
-            document.getElementById("time").innerHTML = amOrPm[Math.floor(d.getHours() / 12)] + " " + ("0" + hour).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
+            document.getElementById("time").innerHTML = amOrPm[Math.floor(d.getHours() / 12)] + " " + ("0" + hour).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
 
             var whichDay = ["日", "一", "二", "三", "四", "五", "六"];
             document.getElementById("date").innerHTML = (d.getMonth() + 1) + "月" + d.getDate() + "日 星期" + whichDay[d.getDay()];
