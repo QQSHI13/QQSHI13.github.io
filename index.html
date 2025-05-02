@@ -1,50 +1,118 @@
-
 <!DOCTYPE html>
-<html lang="zh-CN">
-
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>时钟</title>
+    <title>24点解法计算器</title>
+    <meta charset="utf-8">
     <style>
-        body {
-            text-align: center;
-        }
-
-        #time {
-            font-size: 6em;
-        }
-
-        #date {
-            font-size: 4em;
-        }
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .input-group { margin: 10px 0; }
+        input { width: 50px; margin: 0 5px; padding: 5px; }
+        button { padding: 8px 15px; background: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        #result { margin-top: 20px; }
     </style>
 </head>
-
 <body>
-    <p id="time"></p>
-    <p id="date"></p>
+    <h2>24点解法计算器</h2>
+    <div class="input-group">
+        <input type="number" id="num1" required>
+        <input type="number" id="num2" required>
+        <input type="number" id="num3" required>
+        <input type="number" id="num4" required>
+    </div>
+    <button onclick="calculate()">计算解法</button>
+    <div id="result"></div>
 
     <script>
-        function refresh() {
-            var timeZone = 8;
-            var d = new Date();
-            d.setMinutes(d.getMinutes() + d.getTimezoneOffset() + (timeZone * 60));
-
-            var amOrPm = ["上午", "下午"];
-            var hour = d.getHours() - Math.floor(d.getHours() / 13) * 12;
-            document.getElementById("time").innerHTML = amOrPm[Math.floor(d.getHours() / 12)] + " " + ("0" + hour).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
-
-            var whichDay = ["日", "一", "二", "三", "四", "五", "六"];
-            document.getElementById("date").innerHTML = (d.getMonth() + 1) + "月" + d.getDate() + "日 星期" + whichDay[d.getDay()];
+        function permute(arr) {
+            const result = [];
+            const used = new Array(arr.length).fill(false);
+            function backtrack(path) {
+                if (path.length === arr.length) {
+                    result.push([...path]);
+                    return;
+                }
+                for (let i = 0; i < arr.length; i++) {
+                    if (used[i]) continue;
+                    if (i > 0 && arr[i] === arr[i-1] && !used[i-1]) continue;
+                    used[i] = true;
+                    path.push(arr[i]);
+                    backtrack(path);
+                    path.pop();
+                    used[i] = false;
+                }
+            }
+            backtrack([]);
+            return result;
         }
 
-        refresh()
-        setInterval("refresh()", 500)
+        function* product(...args) {
+            if (args.length === 0) yield [];
+            else {
+                const [head, ...tail] = args;
+                for (const h of head) {
+                    for (const t of product(...tail)) {
+                        yield [h, ...t];
+                    }
+                }
+            }
+        }
+
+        const structures = [
+            (a, b, c, d, op1, op2, op3) => `((${a}${op1}${b})${op2}${c})${op3}${d}`,
+            (a, b, c, d, op1, op2, op3) => `(${a}${op1}(${b}${op2}${c}))${op3}${d}`,
+            (a, b, c, d, op1, op2, op3) => `${a}${op1}((${b}${op2}${c})${op3}${d})`,
+            (a, b, c, d, op1, op2, op3) => `${a}${op1}(${b}${op2}(${c}${op3}${d}))`,
+            (a, b, c, d, op1, op2, op3) => `(${a}${op1}${b})${op3}(${c}${op2}${d})`
+        ];
+
+        function find24Solutions(numbers) {
+            const solutions = new Set();
+            const ops = ['+', '-', '*', '/'];
+            const uniquePerms = permute(numbers).map(p => p.map(String));
+
+            for (const [a, b, c, d] of uniquePerms) {
+                for (const [op1, op2, op3] of product(ops, ops, ops)) {
+                    for (const struct of structures) {
+                        try {
+                            const expr = struct(a, b, c, d, op1, op2, op3);
+                            const value = eval(expr);
+                            if (Math.abs(value - 24) < 1e-6) {
+                                solutions.add(expr.replace(/(\d+)/g, '$1'));
+                            }
+                        } catch (e) {
+                            continue;
+                        }
+                    }
+                }
+            }
+            return Array.from(solutions);
+        }
+
+        function calculate() {
+            const nums = [
+                parseInt(document.getElementById('num1').value),
+                parseInt(document.getElementById('num2').value),
+                parseInt(document.getElementById('num3').value),
+                parseInt(document.getElementById('num4').value)
+            ];
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+            
+            if (nums.some(isNaN)) {
+                resultDiv.innerHTML = '请输入四个有效整数';
+                return;
+            }
+
+            const solutions = find24Solutions(nums);
+            if (solutions.length > 0) {
+                resultDiv.innerHTML = '<strong>找到的解法如下：</strong><br>' + 
+                    solutions.map((sol, idx) => `${idx+1}. ${sol}`).join('<br>');
+            } else {
+                resultDiv.innerHTML = '无法找到解法';
+            }
+        }
     </script>
-
 </body>
-
 </html>
