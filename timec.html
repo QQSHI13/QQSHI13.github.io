@@ -126,23 +126,26 @@
                 var hours = date.getHours();
                 document.write(date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日" + " 星期" + "日一二三四五六".charAt(date.getDay())); //用来显示日期，但是不会实时刷新
                 if (hours >= 0 && hours <= 7) {
-                    document.write(" 凌晨");
-                }
-                else if (hours > 7 && hours <= 10) {
-                    document.write(" 早上");
-                }
-                else if (hours > 10 && hours <= 14) {
-                    document.write(" 上午");
-                }
-                else if (hours > 14 && hours <= 18) {
-                    document.write(" 下午");
-                }
-                else if (hours > 18 && hours <= 20) {
-                    document.write(" 傍晚");
-                }
-                else if (hours > 20 && hours <= 24) {
-                    document.write(" 深夜");
-                }
+                        str+=" 凌晨";
+                    }
+                    else if (hours > 7 && hours <= 9) {
+                        str+=" 早上";
+                    }
+                    else if (hours > 9 && hours <= 12) {
+                        str+=" 上午";
+                    }
+                    else if (hours > 10 && hours <= 12) {
+                        str+=" 中午";
+                    }
+                    else if (hours > 14 && hours <= 18) {
+                        str+=" 下午";
+                    }
+                    else if (hours > 18 && hours <= 21) {
+                        str+=" 傍晚";
+                    }
+                    else if (hours > 21 && hours <= 24) {
+                        str+=" 深夜";
+                    }
             </script>
         </span>
         </form>
@@ -150,7 +153,6 @@
     </header>
     <center>
         <br>
-        <h1>Time</h1>
         <div class="blank" id="time"></div>
         <!--时钟-->
         <br><br>
