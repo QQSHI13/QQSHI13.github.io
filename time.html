@@ -3,8 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <!--<meta name="viewport"
-        content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">-->
     <title>Time</title>
     <style type="text/css">
         .blank {
@@ -78,7 +76,7 @@
         #time {
             position: absolute;
             left: 50%;
-            top: 38.1966%;
+            top: 50%;
             transform: translate(-50%, -50%);
         }
         
@@ -107,7 +105,7 @@
             var time = document.getElementById("time");
             time.innerHTML = str;
         }
-        setInterval(time, 1000); //重复，一秒钟刷新一次
+        setInterval(time, 1000); 
     </script>
 
     </script>
@@ -115,7 +113,6 @@
 
 <body id="tim">
     <div class="blank" id="time"></div>
-    <!--时钟-->
 </body>
 
 </html>
