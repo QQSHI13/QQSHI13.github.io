@@ -5,74 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QQ's Tools</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧰</text></svg>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #0a0a0f;
-            --surface: #16161f;
-            --border: #2a2a35;
-            --text: #e4e4e7;
-            --text-secondary: #a1a1aa;
-            --accent: #6366f1;
-        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+        }
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
             line-height: 1.6;
         }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
         header {
             text-align: center;
-            padding: 80px 20px 40px;
+            margin-bottom: 48px;
         }
-        .avatar {
-            font-size: 64px;
-            margin-bottom: 16px;
-        }
-        h1 {
-            font-size: 42px;
-            font-weight: 700;
+        header h1 {
+            font-size: 48px;
             margin-bottom: 8px;
         }
-        .tagline {
+        header p {
             color: var(--text-secondary);
             font-size: 18px;
-            margin-bottom: 24px;
         }
         .nova-link {
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            margin-top: 16px;
             padding: 12px 24px;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 100px;
-            color: var(--text);
+            color: var(--accent);
             text-decoration: none;
             font-weight: 500;
             transition: all 0.2s;
         }
         .nova-link:hover {
             border-color: var(--accent);
-            background: rgba(99, 102, 241, 0.1);
+            background: rgba(88, 166, 255, 0.1);
         }
-        .nova-link span {
-            font-size: 20px;
-        }
-        main {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        h2 {
+        .section-title {
             font-size: 14px;
-            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             color: var(--text-secondary);
             margin-bottom: 16px;
         }
@@ -80,58 +70,59 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 16px;
-            margin-bottom: 60px;
         }
         .tool-card {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 20px;
+            padding: 24px;
             text-decoration: none;
-            color: inherit;
+            color: var(--text);
             transition: all 0.2s;
         }
         .tool-card:hover {
-            transform: translateY(-2px);
             border-color: var(--accent);
+            transform: translateY(-2px);
         }
         .tool-icon {
-            font-size: 28px;
+            font-size: 32px;
             margin-bottom: 12px;
         }
         .tool-card h3 {
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 18px;
             margin-bottom: 4px;
         }
         .tool-card p {
-            font-size: 14px;
             color: var(--text-secondary);
+            font-size: 14px;
         }
         footer {
             text-align: center;
-            padding: 40px 20px;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
             color: var(--text-secondary);
-            font-size: 14px;
         }
         footer a {
             color: var(--accent);
             text-decoration: none;
         }
+        footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <div class="avatar">🧰</div>
-        <h1>QQ's Tools</h1>
-        <p class="tagline">Hand-crafted developer utilities</p>
-        <a href="https://qqshi13.github.io/nova/" class="nova-link">
-            <span>☄️</span> Meet Nova — My AI Assistant
-        </a>
-    </header>
+    <div class="container">
+        <header>
+            <h1>🧰 QQ's Tools</h1>
+            <p>A collection of developer utilities</p>
+            <a href="https://qqshi13.github.io/nova/" class="nova-link">
+                ☄️ Meet Nova — my AI assistant
+            </a>
+        </header>
 
-    <main>
-        <h2>All Tools</h2>
+        <p class="section-title">All Tools</p>
         <div class="tools-grid">
             <a href="/flow/time-flow.html" class="tool-card">
                 <div class="tool-icon">⏰</div>
@@ -154,7 +145,7 @@
             <a href="/regex-tester/" class="tool-card">
                 <div class="tool-icon">🔍</div>
                 <h3>Regex Tester</h3>
-                <p>Live pattern matching with common patterns</p>
+                <p>Live pattern matching with common patterns library</p>
             </a>
 
             <a href="/jwt-decoder/" class="tool-card">
@@ -172,7 +163,7 @@
             <a href="/diff-viewer/" class="tool-card">
                 <div class="tool-icon">📑</div>
                 <h3>Diff Viewer</h3>
-                <p>Side-by-side diff comparison tool</p>
+                <p>Side-by-side diff with split/inline views</p>
             </a>
 
             <a href="/droptransfer/" class="tool-card">
@@ -181,10 +172,10 @@
                 <p>P2P file transfer via WebRTC</p>
             </a>
         </div>
-    </main>
 
-    <footer>
-        Built by QQ with help from <a href="https://qqshi13.github.io/nova/">Nova ☄️</a>
-    </footer>
+        <footer>
+            <p>Built with ❤️ by QQ & <a href="https://qqshi13.github.io/nova/">Nova ☄️</a></p>
+        </footer>
+    </div>
 </body>
 </html>
