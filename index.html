@@ -231,10 +231,7 @@
         
         /* Footer */
         footer {
-            position: fixed;
-            bottom: 24px;
-            left: 0;
-            right: 0;
+            margin-top: 48px;
             text-align: center;
             color: var(--text-secondary);
             font-size: 13px;
@@ -246,7 +243,14 @@
         }
         
         /* Responsive */
-        @media (max-width: 480px) {
+        @media (max-width: 640px) {
+            body {
+                justify-content: flex-start;
+                padding: 40px 0;
+            }
+            .container {
+                padding: 24px;
+            }
             .stats {
                 gap: 32px;
             }
