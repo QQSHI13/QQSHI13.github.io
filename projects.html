@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Projects — QQ</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2358a6ff'/></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg: #0a0c10;
+            --surface: rgba(22, 27, 34, 0.6);
+            --surface-hover: rgba(33, 38, 45, 0.8);
+            --border: rgba(48, 54, 61, 0.5);
+            --text: #e6edf3;
+            --text-secondary: #7d8590;
+            --accent: #58a6ff;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(88, 166, 255, 0.1), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(35, 134, 54, 0.05), transparent);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+        
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .back-link:hover {
+            color: var(--accent);
+        }
+        
+        .back-link svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .header-title {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .header-right {
+            width: 80px;
+        }
+        
+        /* Search */
+        .search-box {
+            position: relative;
+            margin-bottom: 40px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 16px 24px 16px 52px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--surface-hover);
+        }
+        
+        .search-box input::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        .search-box svg {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            color: var(--text-secondary);
+        }
+        
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        
+        .project-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .project-card:hover {
+            border-color: var(--accent);
+            background: var(--surface-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .project-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        
+        .project-icon {
+            font-size: 40px;
+            line-height: 1;
+        }
+        
+        .project-arrow {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(88, 166, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        
+        .project-card:hover .project-arrow {
+            opacity: 1;
+        }
+        
+        .project-arrow svg {
+            width: 16px;
+            height: 16px;
+            color: var(--accent);
+        }
+        
+        .project-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .project-content p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .project-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: auto;
+            padding-top: 16px;
+        }
+        
+        .tag {
+            padding: 4px 12px;
+            background: rgba(88, 166, 255, 0.1);
+            border-radius: 100px;
+            font-size: 12px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        /* No results */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+            display: none;
+        }
+        
+        .no-results.visible {
+            display: block;
+        }
+        
+        /* Responsive */
+        @media (max-width: 640px) {
+            .header {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+            
+            .header-right {
+                display: none;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    
+    <div class="container">
+        <header class="header">
+            <a href="/" class="back-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Back
+            </a>
+            <h1 class="header-title">All Projects</h1>
+            <div class="header-right"></div>
+        </header>
+        
+        <div class="search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="search" placeholder="Search projects..." autocomplete="off">
+        </div>
+        
+        <div class="projects-grid" id="projects">
+            <a href="/flow/time-flow.html" class="project-card" data-search="flow pomodoro timer clock productivity focus">
+                <div class="project-header">
+                    <div class="project-icon">⏰</div>
+                    <div class="project-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3>Flow</h3>
+                    <p>Clock + Pomodoro timer with keyboard shortcuts and progress ring</p>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">Productivity</span>
+                    <span class="tag">PWA</span>
+                </div>
+            </a>
+            
+            <a href="/time.html" class="project-card" data-search="time clock fullscreen minimal">
+                <div class="project-header">
+                    <div class="project-icon">🕐</div>
+                    <div class="project-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3>Time</h3>
+                    <p>Simple fullscreen digital clock with minimal design</p>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">Clock</span>
+                </div>
+            </a>
+            
+            <a href="/24.html" class="project-card" data-search="24 game solver math puzzle">
+                <div class="project-header">
+                    <div class="project-icon">🎯</div>
+                    <div class="project-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3>24 Point Solver</h3>
+                    <p>Make 24 using four numbers and basic math operations</p>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">Game</span>
+                    <span class="tag">Math</span>
+                </div>
+            </a>
+            
+            <a href="/api-tester/" class="project-card" data-search="api tester http client rest postman">
+                <div class="project-header">
+                    <div class="project-icon">🧪</div>
+                    <div class="project-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3>API Tester</h3>
+                    <p>HTTP client with request history, headers, and shareable URLs</p>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">Developer</span>
+                    <span class="tag">HTTP</span>
+                </div>
+            </a>
+            
+            <a href="/json-viewer/" class="project-card" data-search="json viewer formatter tree">
+                <div class="project-header">
+                    <div class="project-icon">🌳</div>
+                    <div class="project-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3>JSON Viewer</h3>
+                    <p>Collapsible tree view with syntax highlighting and live validation</p>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">JSON</span>
+                    <span class="tag">Viewer</span>
+                </div>
+            </a>
+            
+            <a href="/regex-tester/" class="project-card" data-search="regex tester pattern matching">
+                <div class="project-header">
+                    <div class="project-icon">🔍</div>
+                    <div class="project-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3>Regex Tester</h3>
+                    <p>Live pattern matching with common patterns library</p>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">Regex</span>
+                    <span class="tag">Developer</span>
+                </div>
+            </a>
+            
+            <a href="/jwt-decoder/" class="project-card" data-search="jwt decoder token inspect">
+                <div class="project-header">
+                    <div class="project-icon">🔐</div>
+                    <div class="project-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3>JWT Decoder</h3>
+                    <p>Decode and inspect JWT tokens with expiry detection</p>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">Security</span>
+                    <span class="tag">JWT</span>
+                </div>
+            </a>
+            
+            <a href="/csv-json/" class="project-card" data-search="csv json converter data">
+                <div class="project-header">
+                    <div class="project-icon">📊</div>
+                    <div class="project-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3>CSV to JSON</h3>
+                    <p>Drag-and-drop CSV converter with smart parsing options</p>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">Data</span>
+                    <span class="tag">Converter</span>
+                </div>
+            </a>
+            
+            <a href="/diff-viewer/" class="project-card" data-search="diff viewer compare text">
+                <div class="project-header">
+                    <div class="project-icon">📑</div>
+                    <div class="project-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3>Diff Viewer</h3>
+                    <p>Side-by-side and inline diff with shareable URLs</p>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">Diff</span>
+                    <span class="tag">Text</span>
+                </div>
+            </a>
+            
+            <a href="/droptransfer/" class="project-card" data-search="droptransfer p2p file transfer webrtc">
+                <div class="project-header">
+                    <div class="project-icon">📤</div>
+                    <div class="project-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3>DropTransfer</h3>
+                    <p>P2P file transfer via WebRTC with no server storage</p>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">P2P</span>
+                    <span class="tag">File Transfer</span>
+                </div>
+            </a>
+            
+            <a href="/keycode-logger/" class="project-card" data-search="keycode logger keyboard event">
+                <div class="project-header">
+                    <div class="project-icon">⌨️</div>
+                    <div class="project-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3>Keycode Logger</h3>
+                    <p>Keyboard event debugger with visual key display</p>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">Debug</span>
+                    <span class="tag">Keyboard</span>
+                </div>
+            </a>
+            
+            <a href="/whiteboard/" class="project-card" data-search="whiteboard collaboard collaborative drawing">
+                <div class="project-header">
+                    <div class="project-icon">🎨</div>
+                    <div class="project-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3>CollaBoard</h3>
+                    <p>Real-time P2P collaborative whiteboard</p>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">Collaboration</span>
+                    <span class="tag">Drawing</span>
+                </div>
+            </a>
+            
+            <a href="/lifelab/" class="project-card" data-search="lifelab game of life cellular automaton">
+                <div class="project-header">
+                    <div class="project-icon">🔬</div>
+                    <div class="project-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3>LifeLab</h3>
+                    <p>Conway's Game of Life with pattern library and shareable states</p>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">Simulation</span>
+                    <span class="tag">Math</span>
+                </div>
+            </a>
+        </div>
+        
+        <div class="no-results" id="noResults">
+            <p>No projects found matching your search.</p>
+        </div>
+        
+        <footer>
+            <p>Built with ❤️ by QQ & <a href="https://qqshi13.github.io/nova/">Nova ☄️</a></p>
+        </footer>
+    </div>
+    
+    <script>
+        const searchInput = document.getElementById('search');
+        const projectCards = document.querySelectorAll('.project-card');
+        const noResults = document.getElementById('noResults');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            let visibleCount = 0;
+            
+            projectCards.forEach(card => {
+                const searchText = card.dataset.search.toLowerCase();
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                
+                const matches = !query || 
+                    searchText.includes(query) || 
+                    title.includes(query) || 
+                    description.includes(query);
+                
+                card.style.display = matches ? 'flex' : 'none';
+                if (matches) visibleCount++;
+            });
+            
+            noResults.classList.toggle('visible', visibleCount === 0 && query);
+        });
+    </script>
+</body>
+</html>
