@@ -20,9 +20,6 @@ This is the main landing page for QQ's developer portfolio. It showcases all the
 - **[Time & Flow](https://qqshi13.github.io/flow/)** — Minimalist Pomodoro timer
 - **[DropTransfer](https://qqshi13.github.io/droptransfer/)** — P2P file sharing via WebRTC
 - **[CollaBoard](https://qqshi13.github.io/collaboard/)** — Real-time collaborative whiteboard
-- **[Particles](https://qqshi13.github.io/particles/)** — Interactive particle constellation visualization
-
-### Desktop Apps
 - **[Quick Notes](https://github.com/QQSHI13/quick-notes)** — Windows Command Palette extension
 
 ### Hardware
