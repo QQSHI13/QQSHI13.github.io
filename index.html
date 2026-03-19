@@ -236,6 +236,26 @@
             height: 20px;
         }
         
+        /* Button Row */
+        .button-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+        
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        
+        .cta-button.secondary:hover {
+            background: var(--accent);
+            color: white;
+        }
+        
         /* CTA Button */
         .cta-button {
             display: inline-flex;
@@ -254,7 +274,6 @@
             box-shadow: 0 4px 24px var(--accent-glow);
             position: relative;
             overflow: hidden;
-            animation: fadeInUp 0.8s ease-out 0.4s both;
         }
         
         .cta-button::before {
@@ -539,17 +558,19 @@
             Assisted by <a href="https://openclaw.ai" rel="noopener noreferrer">Nova ☄️</a>
         </p>
         
-        <a href="projects.html" class="cta-button">
-            View All Projects
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-        </a>
-        
-        <a href="blog/index.html" class="cta-button" style="margin-left: 12px; background: transparent; border: 2px solid var(--accent); color: var(--accent);">
-            Read Blog
-        </a>
+        <div class="button-row">
+            <a href="projects.html" class="cta-button">
+                View All Projects
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+            
+            <a href="blog/index.html" class="cta-button secondary">
+                Read Blog
+            </a>
+        </div>
         
         <!-- Social Links -->
         <div class="social-links">
