@@ -1,95 +1,40 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog — QQ</title>
-    <link rel="stylesheet" href="../styles.css">
-    <style>
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: #0a0c10;
-            color: #e6edf3;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 24px;
-        }
-        h1 {
-            font-size: 48px;
-            margin-bottom: 40px;
-            background: linear-gradient(135deg, #fff 0%, #58a6ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .blog-post {
-            background: rgba(22, 27, 34, 0.6);
-            border: 1px solid rgba(48, 54, 61, 0.5);
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 20px;
-            transition: all 0.3s;
-        }
-        .blog-post:hover {
-            border-color: #58a6ff;
-            transform: translateY(-2px);
-        }
-        .blog-post a {
-            color: inherit;
-            text-decoration: none;
-        }
-        .blog-post h2 {
-            font-size: 24px;
-            margin-bottom: 8px;
-            color: #58a6ff;
-        }
-        .blog-post .date {
-            color: #7d8590;
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-        .blog-post p {
-            color: #7d8590;
-            line-height: 1.6;
-        }
-        .back-link {
-            display: inline-block;
-            margin-bottom: 24px;
-            color: #58a6ff;
-            text-decoration: none;
-        }
-        .back-link:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <a href="../index.html" class="back-link">← Back to home</a>
-    
-    <h1>Blog</h1>
-    
-    <article class="blog-post">
-        <a href="fixing-42-bugs.html">
-            <h2>I Fixed 42 Bugs in One Day — Here's What I Learned</h2>
-            <div class="date">March 19, 2026</div>
-            <p>A deep dive into my bug-fixing journey across 11 repositories, what went wrong, and how I prevented future issues.</p>
-        </a>
-    </article>
-    
-    <article class="blog-post">
-        <a href="building-m5timer.html">
-            <h2>Building M5Timer: A Hardware Pomodoro Timer</h2>
-            <div class="date">March 16, 2026</div>
-            <p>How I built a physical Pomodoro timer using the M5Capsule ESP32 device with web sync capabilities.</p>
-        </a>
-    </article>
-    
-    <article class="blog-post">
-        <a href="ai-pair-programming.html">
-            <h2>How I Use AI to Code 10x Faster</h2>
-            <div class="date">March 10, 2026</div>
-            <p>My workflow with Nova (OpenClaw) for building projects, debugging, and learning new technologies.</p>
-        </a>
-    </article>
-</body>
-</html>
+---
+layout: default
+title: Daily Blog
+---
+
+<div class="daily-banner">
+    <h2>📓 Daily Blog</h2>
+    <p>I write every day about what I'm learning, building, and thinking. 
+    Follow along for project updates, tutorials, and insights from a 12-year-old developer.</p>
+</div>
+
+<p class="rss-link">
+    <a href="{{ '/blog/feed.xml' | relative_url }}">📡 RSS Feed</a>
+</p>
+
+<ul class="post-list">
+{% for post in site.posts %}
+    <li>
+        <h2>
+            <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+        </h2>
+        <p class="post-meta">
+            <time datetime="{{ post.date | date_to_xmlschema }}">
+                {{ post.date | date: "%B %d, %Y" }}
+            </time>
+            {% if post.tags %}
+            • 
+            {% for tag in post.tags limit:3 %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+            {% endif %}
+        </p>
+        <div class="post-excerpt">
+            {{ post.excerpt }}
+        </div>
+        <p><a href="{{ post.url | relative_url }}">Read more →</a></p>
+    </li>
+{% endfor %}
+</ul>

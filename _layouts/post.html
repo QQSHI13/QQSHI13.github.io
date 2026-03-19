@@ -1,0 +1,39 @@
+
+---
+layout: default
+---
+
+<article class="post h-entry">
+    <header class="post-header">
+        <h1 class="post-title p-name">{{ page.title | escape }}</h1>
+        <p class="post-meta">
+            <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}">
+                {{ page.date | date: "%B %d, %Y" }}
+            </time>
+            {% if page.author %}
+            • <span class="p-author h-card">{{ page.author }}</span>
+            {% endif %}
+            {% if page.tags %}
+            • 
+            {% for tag in page.tags %}
+            <span class="tag">{{ tag }}</span>{{ unless forloop.last }} {% endunless %}
+            {% endfor %}
+            {% endif %}
+        </p>
+    </header>
+
+    <div class="post-content e-content">
+        {{ content }}
+    </div>
+
+    <footer class="post-footer">
+        <hr>
+        <p>
+            <strong>About the Daily Blog:</strong> This is part of my commitment to write every day 
+            about what I'm learning, building, and thinking. Follow along for daily updates!
+        </p>
+        <p>
+            <a href="{{ '/blog/' | relative_url }}">← All posts</a>
+        </p>
+    </footer>
+</article>

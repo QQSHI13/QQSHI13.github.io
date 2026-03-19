@@ -1,0 +1,55 @@
+
+title: QQ's Blog
+email: shizheng327@gmail.com
+description: >-
+  Daily thoughts, tutorials, and project updates from a 12-year-old developer
+  building web tools, desktop apps, and hardware projects.
+
+baseurl: "/blog"
+url: "https://qqshi13.github.io"
+
+twitter_username: QQSHI13
+github_username: QQSHI13
+
+# Build settings
+markdown: kramdown
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Daily blog settings
+show_excerpts: true
+excerpt_separator: <!--more-->
+
+# Pagination
+paginate: 5
+paginate_path: "/page:num/"
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /:year/:month/:day/:title/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "QQ"
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - .sass-cache/
+  - .jekyll-cache/
+  - .jekyll-metadata

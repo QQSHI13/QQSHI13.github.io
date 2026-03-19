@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+    
+    <link rel="stylesheet" href="{{ '/blog/assets/main.css' | relative_url }}">
+    <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ '/blog/feed.xml' | relative_url }}">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PSNCFVT76"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-3PSNCFVT76');
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="wrapper">
+            <a class="site-title" href="{{ '/blog/' | relative_url }}">{{ site.title }}</a>
+            <nav class="site-nav">
+                <a href="{{ '/' | relative_url }}">← Home</a>
+                <a href="{{ '/projects.html' | relative_url }}">Projects</a>
+                <a href="https://github.com/QQSHI13">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page-content">
+        <div class="wrapper">
+            {{ content }}
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrapper">
+            <p>Built with ❤️ by <a href="https://github.com/QQSHI13">QQ</a> & <a href="https://openclaw.ai">Nova ☄️</a></p>
+            <p><small>© {{ site.time | date: '%Y' }} {{ site.title }}</small></p>
+        </div>
+    </footer>
+</body>
+</html>
