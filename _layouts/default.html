@@ -7,8 +7,30 @@
     <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
     <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
     
-    <link rel="stylesheet" href="{{ '/blog/assets/main.css' | relative_url }}?v=2">
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%2358a6ff'/%3E%3C/svg%3E">
+    
+    <!-- Preconnect for fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ '/blog/assets/main.css' | relative_url }}?v=3">
+    
+    <!-- RSS Feed -->
     <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ '/blog/feed.xml' | relative_url }}">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+    <meta property="og:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+    <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+    <meta property="og:url" content="{{ page.url | absolute_url }}">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+    <meta name="twitter:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
     
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PSNCFVT76"></script>
@@ -22,9 +44,11 @@
 <body>
     <header class="site-header">
         <div class="wrapper">
-            <a class="site-title" href="{{ '/blog/' | relative_url }}">{{ site.title }}</a>
+            <a class="site-title" href="{{ '/blog/' | relative_url }}">
+                <span class="site-emoji">📓</span> {{ site.title }}
+            </a>
             <nav class="site-nav">
-                <a href="{{ '/' | relative_url }}">← Home</a>
+                <a href="{{ '/' | relative_url }}">Home</a>
                 <a href="{{ '/projects.html' | relative_url }}">Projects</a>
                 <a href="https://github.com/QQSHI13">GitHub</a>
             </nav>
@@ -39,8 +63,15 @@
 
     <footer class="site-footer">
         <div class="wrapper">
-            <p>Built with ❤️ by <a href="https://github.com/QQSHI13">QQ</a> & <a href="https://openclaw.ai">Nova ☄️</a></p>
-            <p><small>© {{ site.time | date: '%Y' }} {{ site.title }}</small></p>
+            <div class="footer-content">
+                <p>Built with ❤️ by <a href="https://github.com/QQSHI13">QQ</a> & <a href="https://openclaw.ai">Nova ☄️</a></p>
+                <p class="footer-links">
+                    <a href="{{ '/blog/feed.xml' | relative_url }}">RSS</a> • 
+                    <a href="mailto:shizheng327@gmail.com">Email</a> • 
+                    <a href="https://github.com/QQSHI13">GitHub</a>
+                </p>
+                <p><small>© {{ site.time | date: '%Y' }} {{ site.title }}</small></p>
+            </div>
         </div>
     </footer>
 </body>
