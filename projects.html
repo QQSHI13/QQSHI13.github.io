@@ -497,27 +497,44 @@
         const searchInput = document.getElementById('search');
         const projectCards = document.querySelectorAll('.project-card');
         const noResults = document.getElementById('noResults');
-        
-        searchInput.addEventListener('input', (e) => {
+
+        // Debounce function to limit search execution frequency
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Search function
+        function performSearch(e) {
             const query = e.target.value.toLowerCase().trim();
             let visibleCount = 0;
-            
+
             projectCards.forEach(card => {
                 const searchText = card.dataset.search.toLowerCase();
                 const title = card.querySelector('h3').textContent.toLowerCase();
                 const description = card.querySelector('p').textContent.toLowerCase();
-                
-                const matches = !query || 
-                    searchText.includes(query) || 
-                    title.includes(query) || 
+
+                const matches = !query ||
+                    searchText.includes(query) ||
+                    title.includes(query) ||
                     description.includes(query);
-                
+
                 card.style.display = matches ? 'flex' : 'none';
                 if (matches) visibleCount++;
             });
-            
+
             noResults.classList.toggle('visible', visibleCount === 0 && query);
-        });
+        }
+
+        // Apply debounced search with 200ms delay
+        searchInput.addEventListener('input', debounce(performSearch, 200));
     </script>
 </body>
 </html>
