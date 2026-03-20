@@ -5,7 +5,7 @@ description: >-
   Daily thoughts, tutorials, and project updates from a 12-year-old developer
   building web tools, desktop apps, and hardware projects.
 
-baseurl: "/blog"
+baseurl: ""  # Empty for user site (qqshi13.github.io)
 url: "https://qqshi13.github.io"
 
 twitter_username: QQSHI13
