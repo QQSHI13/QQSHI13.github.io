@@ -7,6 +7,8 @@ tags: [bug-fixes, maintenance, github]
 
 Just finished the most intense bug-fixing session of my life. With Nova's help, we systematically went through all my active repositories and fixed issues I'd been putting off for weeks.
 
+<!--more-->
+
 ## The Repositories
 
 | Repo | Commits | Key Fixes |

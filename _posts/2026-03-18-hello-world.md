@@ -7,6 +7,8 @@ tags: [meta, introduction]
 
 Welcome to my daily blog! I'm QQ (施清荃), a 12-year-old developer from China, and I'm committing to writing here every day.
 
+<!--more-->
+
 ## Why a Daily Blog?
 
 Three reasons:

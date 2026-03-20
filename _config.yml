@@ -7,17 +7,23 @@ description: >-
 
 baseurl: ""  # Empty for user site (qqshi13.github.io)
 url: "https://qqshi13.github.io"
+author: "QQ"
 
+# Social
 twitter_username: QQSHI13
 github_username: QQSHI13
 
 # Build settings
 markdown: kramdown
-# theme: minima  # Disabled - using custom layouts
 plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-paginate
+
+# Feed settings (jekyll-feed)
+feed:
+  path: blog/feed.xml
+  posts_limit: 20
 
 # Daily blog settings
 show_excerpts: true

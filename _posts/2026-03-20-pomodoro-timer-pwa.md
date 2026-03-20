@@ -7,6 +7,8 @@ tags: [javascript, pwa, productivity]
 
 Today I built a fully-featured Pomodoro timer with Progressive Web App support. This is something I've wanted to make for a while because I need better focus sessions for my coding work.
 
+<!--more-->
+
 ## What I Built
 
 **Flow** — a clean, keyboard-driven Pomodoro timer that works offline and can be installed on any device.
