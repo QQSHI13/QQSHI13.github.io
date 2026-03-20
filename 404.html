@@ -134,6 +134,22 @@
             background: rgba(33, 38, 45, 0.8);
             border-color: var(--accent);
         }
+
+        /* Skip navigation */
+        .skip-nav {
+            position: absolute;
+            top: -100%;
+            left: 0;
+            padding: 12px 24px;
+            background: var(--accent);
+            color: var(--bg);
+            font-weight: 600;
+            z-index: 9999;
+            text-decoration: none;
+        }
+        .skip-nav:focus {
+            top: 0;
+        }
         
         .glitch {
             position: relative;
@@ -179,9 +195,10 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
     <div class="bg-gradient"></div>
-    
-    <main class="container">
+
+    <main class="container" id="main-content">
         <div class="error-code glitch" data-text="404">404</div>
         <h1>Page Not Found</h1>
         <p>The page you're looking for doesn't exist or has been moved.</p>

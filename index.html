@@ -503,6 +503,22 @@
             text-decoration: none;
         }
         
+        /* Skip navigation */
+        .skip-nav {
+            position: absolute;
+            top: -100%;
+            left: 0;
+            padding: 12px 24px;
+            background: var(--accent);
+            color: var(--bg);
+            font-weight: 600;
+            z-index: 9999;
+            text-decoration: none;
+        }
+        .skip-nav:focus {
+            top: 0;
+        }
+
         /* Responsive */
         @media (max-width: 640px) {
             .avatar {
@@ -535,11 +551,12 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
     <div class="bg-gradient"></div>
     <div class="particles" id="particles"></div>
-    
+
     <!-- Hero Section (Full Screen) -->
-    <section class="hero">
+    <section class="hero" id="main-content">
         <div class="avatar">🛠️</div>
         <h1>QQ</h1>
         <p class="tagline">Hi! I'm QQ (施清荃), a 12-year-old developer building tools with AI</p>

@@ -261,6 +261,22 @@
             display: block;
         }
         
+        /* Skip navigation */
+        .skip-nav {
+            position: absolute;
+            top: -100%;
+            left: 0;
+            padding: 12px 24px;
+            background: var(--accent);
+            color: var(--bg);
+            font-weight: 600;
+            z-index: 9999;
+            text-decoration: none;
+        }
+        .skip-nav:focus {
+            top: 0;
+        }
+
         /* Responsive */
         @media (max-width: 640px) {
             .header {
@@ -280,9 +296,10 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
     <div class="bg-gradient"></div>
-    
-    <div class="container">
+
+    <div class="container" id="main-content">
         <header class="header">
             <a href="/" class="back-link">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
