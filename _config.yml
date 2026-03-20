@@ -17,6 +17,7 @@ markdown: kramdown
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+  - jekyll-paginate
 
 # Daily blog settings
 show_excerpts: true
