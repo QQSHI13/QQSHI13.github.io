@@ -159,10 +159,6 @@ a:hover {
     margin-bottom: 16px;
 }
 
-.post-list p:last-child {
-    font-weight: 500;
-}
-
 /* Individual Post */
 .post {
     max-width: 100%;
@@ -315,11 +311,7 @@ hr {
         display: block;
         text-align: center;
     }
-    
-    .daily-banner h2 {
-        font-size: 22px;
-    }
-    
+
     .post-title {
         font-size: 28px;
     }

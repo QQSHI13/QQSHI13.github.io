@@ -29,10 +29,6 @@ feed:
 show_excerpts: true
 excerpt_separator: <!--more-->
 
-# Pagination
-paginate: 5
-paginate_path: "/page:num/"
-
 # Defaults
 defaults:
   - scope:
