@@ -36,6 +36,11 @@
             --text-secondary: #7d8590;
             --accent: #58a6ff;
             --accent-glow: rgba(88, 166, 255, 0.3);
+            --glass-bg: rgba(22, 27, 34, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glow-color: rgba(88, 166, 255, 0.3);
+            --glow-strong: rgba(88, 166, 255, 0.5);
+            --accent-cyan: #39d0d8;
         }
         
         html {
@@ -48,20 +53,36 @@
             color: var(--text);
             overflow-x: hidden;
         }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
         
         /* Animated gradient background */
+        @keyframes haloShift {
+            0%, 100% { transform: scale(1) translate(0, 0); }
+            33% { transform: scale(1.05) translate(-2%, 1%); }
+            66% { transform: scale(0.98) translate(2%, -1%); }
+        }
+
         .bg-gradient {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
+            background:
                 radial-gradient(ellipse 80% 50% at 50% -20%, rgba(88, 166, 255, 0.15), transparent),
                 radial-gradient(ellipse 60% 40% at 80% 80%, rgba(35, 134, 54, 0.1), transparent),
                 radial-gradient(ellipse 50% 30% at 20% 100%, rgba(139, 92, 246, 0.08), transparent);
             pointer-events: none;
             z-index: -1;
+            animation: haloShift 20s ease-in-out infinite;
         }
         
         /* Floating particles */
@@ -110,31 +131,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Avatar */
-        .avatar {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, var(--accent), #238636);
-            border-radius: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 40px;
-            font-size: 48px;
-            box-shadow: 0 20px 40px rgba(88, 166, 255, 0.2);
-            animation: pulse 4s ease-in-out infinite, fadeInUp 0.8s ease-out;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        
         /* Typography */
         h1 {
             font-size: clamp(48px, 10vw, 72px);
-            font-weight: 700;
-            letter-spacing: -0.02em;
+            font-weight: 800;
+            letter-spacing: -0.03em;
             margin-bottom: 16px;
             background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
             -webkit-background-clip: text;
@@ -196,18 +197,21 @@
         .badge {
             padding: 6px 14px;
             background: var(--surface);
-            border: 1px solid var(--border);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             font-size: 13px;
             font-weight: 500;
             color: var(--accent);
             transition: all 0.2s;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
-        
+
         .badge:hover {
             background: var(--accent);
             color: white;
             transform: translateY(-2px);
+            box-shadow: 0 0 12px var(--glow-color);
         }
         
         /* Social Links */
@@ -368,19 +372,22 @@
         }
         
         .project-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
             border-radius: 16px;
             padding: 24px;
             text-decoration: none;
             color: inherit;
-            transition: all 0.3s ease;
+            box-shadow: 0 0 0 transparent;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
         }
-        
+
         .project-card:hover {
             transform: translateY(-4px);
-            border-color: var(--accent);
-            box-shadow: 0 8px 32px rgba(88, 166, 255, 0.15);
+            border-color: rgba(88, 166, 255, 0.4);
+            box-shadow: 0 0 20px var(--glow-color), 0 8px 32px rgba(0,0,0,0.4);
         }
         
         .project-icon {
@@ -437,17 +444,21 @@
         }
         
         .learning-item {
-            background: var(--surface);
-            border: 1px solid var(--border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
             border-radius: 16px;
             padding: 24px;
             text-align: center;
-            transition: all 0.3s ease;
+            box-shadow: 0 0 0 transparent;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
         }
-        
+
         .learning-item:hover {
             transform: translateY(-4px);
-            border-color: var(--accent);
+            border-color: rgba(88, 166, 255, 0.4);
+            box-shadow: 0 0 20px var(--glow-color), 0 8px 32px rgba(0,0,0,0.4);
         }
         
         .learning-icon {
@@ -536,14 +547,23 @@
             top: 0;
         }
 
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .revealed { opacity: 1; transform: translateY(0); }
+
+        #cursor-glow {
+            position: fixed;
+            pointer-events: none;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(88,166,255,0.12) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s;
+            z-index: 9999;
+        }
+
         /* Responsive */
         @media (max-width: 640px) {
-            .avatar {
-                width: 80px;
-                height: 80px;
-                font-size: 36px;
-            }
-            
             h1 {
                 font-size: clamp(36px, 12vw, 56px);
             }
@@ -574,7 +594,6 @@
 
     <!-- Hero Section (Full Screen) -->
     <section class="hero" id="main-content">
-        <div class="avatar">🛠️</div>
         <h1>QQ</h1>
         <p class="tagline">Hi! I'm QQ (施清荃), a 12-year-old developer building tools with AI</p>
         
@@ -632,7 +651,7 @@
         <section class="featured-projects">
             <h2>Featured Projects</h2>
             <div class="projects-grid">
-                <a href="https://qqshi13.github.io/flow/" class="project-card" rel="noopener noreferrer">
+                <a href="https://qqshi13.github.io/flow/" class="project-card reveal" rel="noopener noreferrer">
                     <div class="project-icon">⏱️</div>
                     <h3>Flow</h3>
                     <p>Pomodoro timer with PWA support, keyboard shortcuts, and customizable settings</p>
@@ -642,7 +661,7 @@
                     </div>
                 </a>
                 
-                <a href="https://qqshi13.github.io/droptransfer/" class="project-card" rel="noopener noreferrer">
+                <a href="https://qqshi13.github.io/droptransfer/" class="project-card reveal" rel="noopener noreferrer">
                     <div class="project-icon">📦</div>
                     <h3>DropTransfer</h3>
                     <p>P2P file sharing with WebRTC, no server needed</p>
@@ -652,7 +671,7 @@
                     </div>
                 </a>
                 
-                <a href="https://github.com/QQSHI13/M5Timer" class="project-card" rel="noopener noreferrer">
+                <a href="https://github.com/QQSHI13/M5Timer" class="project-card reveal" rel="noopener noreferrer">
                     <div class="project-icon">⏲️</div>
                     <h3>M5Timer</h3>
                     <p>Hardware Pomodoro timer for M5Capsule with web sync</p>
@@ -670,17 +689,17 @@
         <section class="learning">
             <h2>Currently Learning</h2>
             <div class="learning-grid">
-                <div class="learning-item">
+                <div class="learning-item reveal">
                     <div class="learning-icon">🦀</div>
                     <h3>Rust</h3>
                     <p>Systems programming and WebAssembly</p>
                 </div>
-                <div class="learning-item">
+                <div class="learning-item reveal">
                     <div class="learning-icon">🧠</div>
                     <h3>AI/ML</h3>
                     <p>LLMs, fine-tuning, and agent systems</p>
                 </div>
-                <div class="learning-item">
+                <div class="learning-item reveal">
                     <div class="learning-icon">🔧</div>
                     <h3>Embedded</h3>
                     <p>ESP32, sensors, and IoT projects</p>
@@ -688,7 +707,7 @@
             </div>
         </section>
         
-        <section class="about-me">
+        <section class="about-me reveal">
             <h2>About Me</h2>
             <p>I create web tools, desktop apps, and hardware projects that solve real problems. From Pomodoro timers to P2P file sharing, I love turning ideas into working products.</p>
             <p>Hi! I'm QQ (施清荃), a 12-year-old developer building web tools, desktop apps, and hardware projects.</p>
@@ -708,17 +727,36 @@
         <p>&copy; 2026 QQ. All rights reserved.</p>
     </footer>
     
+    <div id="cursor-glow"></div>
     <script>
-        // Create floating particles
-        const particlesContainer = document.getElementById('particles');
-        for (let i = 0; i < 20; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 15 + 's';
-            particle.style.animationDuration = (10 + Math.random() * 10) + 's';
-            particlesContainer.appendChild(particle);
-        }
+    // Floating particles
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+        particlesContainer.appendChild(particle);
+    }
+
+    // Cursor glow
+    const glow = document.getElementById('cursor-glow');
+    document.addEventListener('mousemove', e => {
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('revealed');
+                observer.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
