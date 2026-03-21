@@ -1,0 +1,11 @@
+# robots.txt for QQ Developer Tools
+# https://qqshi13.github.io/
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://qqshi13.github.io/sitemap.xml
+
+# Disallow 404 page from indexing (though it has noindex meta tag too)
+Disallow: /404.html
