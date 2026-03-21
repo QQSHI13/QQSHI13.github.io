@@ -592,6 +592,7 @@
             glow.style.top = e.clientY + 'px';
             glow.style.opacity = '1';
         });
+        document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
 
         // Scroll reveal
         const observer = new IntersectionObserver(entries => {
@@ -638,7 +639,10 @@
                     description.includes(query);
 
                 card.style.display = matches ? 'flex' : 'none';
-                if (matches) visibleCount++;
+                if (matches) {
+                    card.classList.add('revealed');
+                    visibleCount++;
+                }
             });
 
             noResults.classList.toggle('visible', visibleCount === 0 && query);
