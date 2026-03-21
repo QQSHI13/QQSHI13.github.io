@@ -47,7 +47,7 @@ title: Daily Blog
     <main class="blog-main">
         <div class="posts-timeline">
             {% for post in site.posts %}
-            <article class="timeline-item">
+            <article class="timeline-item reveal">
                 <div class="timeline-marker">
                     <div class="timeline-dot"></div>
                     <time class="timeline-date">
@@ -118,12 +118,20 @@ title: Daily Blog
 }
 
 .profile-card {
-    background: linear-gradient(145deg, #1a1f2e 0%, #0f1419 100%);
+    background: rgba(22, 27, 34, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-radius: 20px;
     padding: 32px 24px;
     text-align: center;
-    border: 1px solid rgba(88, 166, 255, 0.1);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 0 rgba(88,166,255,0), 0 8px 32px rgba(0,0,0,0);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.profile-card:hover {
+    border-color: rgba(88, 166, 255, 0.4);
+    box-shadow: 0 0 20px rgba(88, 166, 255, 0.3), 0 8px 32px rgba(0,0,0,0.4);
 }
 
 .avatar {
@@ -260,8 +268,9 @@ title: Daily Blog
     top: 0;
     bottom: 0;
     width: 2px;
-    background: linear-gradient(180deg, #58a6ff 0%, #a371f7 50%, transparent 100%);
+    background: linear-gradient(180deg, rgba(88,166,255,0.9) 0%, rgba(163,113,247,0.7) 50%, rgba(88,166,255,0.2) 100%);
     border-radius: 2px;
+    box-shadow: 0 0 8px rgba(88, 166, 255, 0.4);
 }
 
 .timeline-item {
@@ -319,16 +328,19 @@ title: Daily Blog
 
 /* Post Preview */
 .post-preview {
-    background: #161b22;
-    border: 1px solid #30363d;
+    background: rgba(22, 27, 34, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
     padding: 28px;
-    transition: all 0.3s;
+    box-shadow: 0 0 0 0 rgba(88,166,255,0), 0 8px 32px rgba(0,0,0,0);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
 }
 
 .post-preview:hover {
-    border-color: rgba(88, 166, 255, 0.3);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border-color: rgba(88, 166, 255, 0.4);
+    box-shadow: 0 0 20px rgba(88, 166, 255, 0.3), 0 8px 32px rgba(0,0,0,0.4);
     transform: translateX(4px);
 }
 
