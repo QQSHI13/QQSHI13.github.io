@@ -31,9 +31,6 @@
     box-shadow: 0 0 20px var(--glow-color), 0 8px 32px rgba(0,0,0,0.4);
 }
 
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
-.revealed { opacity: 1; transform: translateY(0); }
-
 #cursor-glow {
     position: fixed;
     pointer-events: none;
@@ -139,76 +136,6 @@ a:hover {
 .page-content {
     flex: 1;
     padding: 40px 0;
-}
-
-/* Banner */
-.daily-banner {
-    background: linear-gradient(135deg, rgba(88, 166, 255, 0.1), rgba(139, 92, 246, 0.05));
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 32px;
-    margin-bottom: 40px;
-    text-align: center;
-}
-
-.daily-banner h2 {
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.daily-banner p {
-    color: var(--text-secondary);
-    font-size: 16px;
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-/* RSS Link */
-.rss-link {
-    text-align: right;
-    margin-bottom: 24px;
-}
-
-.rss-link a {
-    font-size: 14px;
-    font-weight: 500;
-}
-
-/* Post List */
-.post-list {
-    list-style: none;
-}
-
-.post-list li {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 20px;
-    transition: all 0.3s ease;
-}
-
-.post-list li:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-}
-
-.post-list h2 {
-    font-size: 22px;
-    margin-bottom: 8px;
-}
-
-.post-list h2 a {
-    color: var(--text);
-}
-
-.post-list h2 a:hover {
-    color: var(--accent);
-    text-decoration: none;
 }
 
 .post-meta {
@@ -324,6 +251,13 @@ a:hover {
 }
 
 .post-content hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+}
+
+/* Global hr styling */
+hr {
     border: none;
     border-top: 1px solid var(--border);
     margin: 40px 0;

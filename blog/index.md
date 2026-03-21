@@ -47,7 +47,7 @@ title: Daily Blog
     <main class="blog-main">
         <div class="posts-timeline">
             {% for post in site.posts %}
-            <article class="timeline-item reveal">
+            <article class="timeline-item">
                 <div class="timeline-marker">
                     <div class="timeline-dot"></div>
                     <time class="timeline-date">
@@ -93,6 +93,11 @@ title: Daily Blog
 </div>
 
 <style>
+/* ===== Page Wrapper Override ===== */
+.page-content .wrapper {
+    max-width: 1100px;
+}
+
 /* ===== Layout ===== */
 .blog-container {
     display: grid;
@@ -264,7 +269,7 @@ title: Daily Blog
 .posts-timeline::before {
     content: '';
     position: absolute;
-    left: 7px;
+    left: 15px;
     top: 0;
     bottom: 0;
     width: 2px;
@@ -305,7 +310,7 @@ title: Daily Blog
     flex-direction: column;
     align-items: center;
     margin-top: 8px;
-    width: 40px;
+    width: 32px;
 }
 
 .date-num {
@@ -438,7 +443,7 @@ title: Daily Blog
     }
     
     .posts-timeline::before {
-        left: 3px;
+        left: 11px;
     }
     
     .timeline-marker {
