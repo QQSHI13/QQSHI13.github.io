@@ -747,6 +747,7 @@
         glow.style.top = e.clientY + 'px';
         glow.style.opacity = '1';
     });
+    document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
 
     // Scroll reveal
     const observer = new IntersectionObserver(entries => {
