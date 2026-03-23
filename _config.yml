@@ -25,6 +25,10 @@ feed:
   path: blog/feed.xml
   posts_limit: 20
 
+# Pagination settings (jekyll-paginate)
+paginate: 5
+paginate_path: "/blog/page:num/"
+
 # Daily blog settings
 show_excerpts: true
 excerpt_separator: <!--more-->
@@ -42,6 +46,7 @@ defaults:
 exclude:
   - Gemfile
   - Gemfile.lock
+  - TEMPLATE.md
   - node_modules
   - vendor/bundle/
   - vendor/cache/
