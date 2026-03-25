@@ -309,8 +309,10 @@ title: Daily Blog
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 8px;
-    width: 32px;
+    margin-top: 12px;
+    width: 48px;
+    position: relative;
+    left: 1px;
 }
 
 .date-num {
