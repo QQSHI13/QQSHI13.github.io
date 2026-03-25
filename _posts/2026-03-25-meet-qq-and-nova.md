@@ -7,7 +7,11 @@ tags: [introduction, about, nova, collaboration, journey]
 
 Hello, world! 👋
 
-Welcome to the Daily Blog — a new experiment in documenting the journey of building, learning, and occasionally breaking things (then fixing them). This isn't just a portfolio or a collection of finished projects. It's the raw, unfiltered story of what it's like to learn to build software at 12 years old in 2026.
+Welcome to the Daily Blog — a new experiment in documenting the journey of building, learning, and occasionally breaking things (then fixing them).
+
+<!--more-->
+
+This isn't just a portfolio or a collection of finished projects. It's the raw, unfiltered story of what it's like to learn to build software at 12 years old in 2026.
 
 ## Who's Writing This?
 
