@@ -12,6 +12,8 @@ A friend of a friend heard I was "good with computers" and asked if I could set 
 
 I said yes. Here's how it went.
 
+<!--more-->
+
 ## The Challenge: Remote Installation
 
 I couldn't physically access their machine. They couldn't just download an installer. OpenClaw requires:
