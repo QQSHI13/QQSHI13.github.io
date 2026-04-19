@@ -1,7 +1,7 @@
 {
   "name": "QQ's Tools",
   "short_name": "QQ's Tools",
-  "description": "Hand-crafted developer utilities by QQ",
+  "description": "QQ — 12-year-old developer building tools with AI",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0a0f",

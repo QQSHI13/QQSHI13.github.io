@@ -1,7 +1,9 @@
-const CACHE_NAME = 'qq-tools-v1';
+const CACHE_NAME = 'qq-tools-v2';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html'
+  '/index.html',
+  '/projects.html',
+  '/blog/index.html'
 ];
 
 self.addEventListener('install', (event) => {
