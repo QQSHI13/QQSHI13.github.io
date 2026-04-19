@@ -1,4 +1,4 @@
-const CACHE_NAME = 'qq-tools-v3';
+const CACHE_NAME = 'qq-tools-v4';
 const PRECACHE_ASSETS = [
   '/',
   '/index.html',
@@ -32,7 +32,7 @@ self.addEventListener('fetch', (event) => {
   const isHTML = event.request.mode === 'navigate' || event.request.destination === 'document';
 
   if (isHTML) {
-    // Network-first for HTML pages (fresh content)
+    // Network-first for HTML pages, but fallback to cache when offline
     event.respondWith(
       fetch(event.request).then((networkResponse) => {
         if (networkResponse && networkResponse.status === 200) {
@@ -43,7 +43,10 @@ self.addEventListener('fetch', (event) => {
         }
         return networkResponse;
       }).catch(() => {
-        return caches.match(event.request);
+        // Network failed - return cached version or offline fallback
+        return caches.match(event.request).then((cachedResponse) => {
+          return cachedResponse || caches.match('/index.html');
+        });
       })
     );
   } else {
