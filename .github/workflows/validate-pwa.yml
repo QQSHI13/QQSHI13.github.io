@@ -1,0 +1,34 @@
+name: Validate PWA
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  validate-pwa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli@0.14.x
+
+      - name: Manifest exists
+        run: test -f manifest.json
+
+      - name: Service Worker exists
+        run: test -f sw.js
+
+      - name: Check manifest link in index.html
+        run: grep -q '<link rel="manifest"' index.html
+
+      - name: Check service worker registration in index.html
+        run: grep -q 'navigator.serviceWorker.register' index.html || grep -q 'serviceWorker.register' index.html

@@ -15,6 +15,7 @@ This is the main landing page for QQ's developer portfolio. It showcases all the
 ## 🚀 Featured Projects
 
 ### Web Tools
+- **[24 Point Solver](https://qqshi13.github.io/24.html)** — Math puzzle game — make 24 using four numbers
 - **[Tools Suite](https://qqshi13.github.io/tools-suite/)** — Collection of developer utilities (API Tester, JSON Viewer, JWT Decoder, etc.)
 - **[LifeLab](https://qqshi13.github.io/lifelab/)** — Conway's Game of Life simulator with 30+ patterns
 - **[Time & Flow](https://qqshi13.github.io/flow/)** — Minimalist Pomodoro timer

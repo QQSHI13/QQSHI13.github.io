@@ -23,6 +23,7 @@
     <meta name="twitter:description" content="12-year-old developer building web tools, desktop apps, and hardware projects.">
     <title>QQ — Developer Tools</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%2358a6ff'/%3E%3C/svg%3E">
+    <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -622,6 +623,20 @@
                 Read Blog
             </a>
         </div>
+                <p>AI remote control for Windows desktop</p>
+            </a>
+        </div>
+            
+            <a href="blog/index.html" class="cta-button secondary">
+                Read Blog
+            </a>
+
+            <a href="https://clawhub.com/skill/wincontrol" class="tool-card" target="_blank" rel="noopener noreferrer">
+                <div class="tool-icon">🖥️</div>
+                <h3>WinControl</h3>
+                <p>AI remote control for Windows desktop</p>
+            </a>
+        </div>
         
         <!-- Social Links -->
         <div class="social-links">
@@ -643,6 +658,16 @@
         <section class="featured-projects">
             <h2>Featured Projects</h2>
             <div class="projects-grid">
+                <a href="/24.html" class="project-card reveal" rel="noopener noreferrer">
+                    <div class="project-icon">🎯</div>
+                    <h3>24 Point Solver</h3>
+                    <p>Math puzzle game — make 24 using four numbers and basic operations</p>
+                    <div class="project-tags">
+                        <span>JavaScript</span>
+                        <span>Game</span>
+                    </div>
+                </a>
+                
                 <a href="https://qqshi13.github.io/flow/" class="project-card reveal" rel="noopener noreferrer">
                     <div class="project-icon">⏱️</div>
                     <h3>Flow</h3>
@@ -749,6 +774,13 @@
         });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    </script>
+    
+    // Service Worker for PWA
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then(function(reg) { console.log('SW registered:', reg.scope); })
+            .catch(function(err) { console.error('SW registration failed:', err); });
+    }
+</script>
 </body>
 </html>
