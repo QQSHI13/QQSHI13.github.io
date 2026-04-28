@@ -17,7 +17,7 @@ title: Daily Blog
                     <span class="stat-label">Posts</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number">12</span>
+                    <span class="stat-number">{{ site.time | date: "%Y" | minus: site.birth_year }}</span>
                     <span class="stat-label">Years</span>
                 </div>
             </div>

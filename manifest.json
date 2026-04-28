@@ -1,4 +1,5 @@
 {
+  "_comment": "SVG icons may not render on older Android/Chrome versions. Consider adding PNG fallbacks if PWA install fails.",
   "name": "QQ's Tools",
   "short_name": "QQ's Tools",
   "description": "QQ — 12-year-old developer building tools with AI",

@@ -9,6 +9,9 @@ baseurl: ""  # Empty for user site (qqshi13.github.io)
 url: "https://qqshi13.github.io"
 author: "QQ"
 
+# Profile
+birth_year: 2013
+
 # Social
 twitter_username: QQSHI13
 github_username: QQSHI13
