@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com; manifest-src 'self';">
+    <meta name="robots" content="noindex, nofollow">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PSNCFVT76"></script>
 <script>
@@ -234,6 +236,17 @@
             40% { clip-path: inset(40% 0 40% 0); transform: translate(-2px, 2px); }
             60% { clip-path: inset(20% 0 60% 0); transform: translate(2px, 0); }
             80% { clip-path: inset(0 0 80% 0); transform: translate(-2px, -2px); }
+        }
+        /* Respect prefers-reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .bg-gradient { animation: none !important; }
+            .container { animation: none !important; opacity: 1 !important; transform: none !important; }
+            .error-code { animation: none !important; }
+            .glitch::before, .glitch::after { animation: none !important; clip-path: none !important; transform: none !important; }
+            .btn { transition: none !important; }
+            .btn:hover { transform: none !important; box-shadow: none !important; }
+            #cursor-glow { display: none !important; }
         }
     </style>
 </head>

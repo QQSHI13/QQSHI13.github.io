@@ -46,7 +46,7 @@ title: Daily Blog
     <!-- Main Content -->
     <main class="blog-main">
         <div class="posts-timeline">
-            {% for post in site.posts %}
+            {% for post in site.posts limit: 10 %}
             <article class="timeline-item">
                 <div class="timeline-marker">
                     <div class="timeline-dot"></div>

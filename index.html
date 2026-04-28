@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com; manifest-src 'self';">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PSNCFVT76"></script>
 <script>
@@ -584,6 +585,29 @@
             
             .about-me p {
                 font-size: 16px;
+            }
+        }
+        /* Respect prefers-reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .bg-gradient, .particle, .reveal, .scroll-indicator {
+                animation: none !important;
+            }
+            h1, .tagline, .subtitle {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .project-card, .learning-item {
+                transition: none !important;
+                transform: none !important;
+            }
+            .project-card:hover, .learning-item:hover {
+                transform: none !important;
+                box-shadow: none !important;
+            }
+            .scroll-indicator {
+                animation: none !important;
             }
         }
     </style>

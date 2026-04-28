@@ -1,4 +1,23 @@
-const CACHE_NAME = 'qq-tools-v4';
+const CACHE_NAME = 'qq-tools-v5';
+const MAX_CACHE_ITEMS = 100;
+let cachePromise = null;
+
+function getCache() {
+  if (!cachePromise) {
+    cachePromise = caches.open(CACHE_NAME);
+  }
+  return cachePromise;
+}
+
+function limitCacheSize(cache) {
+  return cache.keys().then((keys) => {
+    if (keys.length > MAX_CACHE_ITEMS) {
+      const toDelete = keys.slice(0, keys.length - MAX_CACHE_ITEMS);
+      return Promise.all(toDelete.map((key) => cache.delete(key)));
+    }
+  });
+}
+
 const PRECACHE_ASSETS = [
   '/',
   '/index.html',
@@ -8,9 +27,17 @@ const PRECACHE_ASSETS = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(PRECACHE_ASSETS))
-      .then(() => self.skipWaiting())
+    getCache().then((cache) => {
+      return Promise.allSettled(
+        PRECACHE_ASSETS.map((url) =>
+          fetch(url).then((response) => {
+            if (response.ok && response.type === 'basic') {
+              return cache.put(url, response);
+            }
+          }).catch(() => {})
+        )
+      );
+    }).then(() => self.skipWaiting())
   );
 });
 
@@ -35,17 +62,23 @@ self.addEventListener('fetch', (event) => {
     // Network-first for HTML pages, but fallback to cache when offline
     event.respondWith(
       fetch(event.request).then((networkResponse) => {
-        if (networkResponse && networkResponse.status === 200) {
+        // Prevent cache poisoning from redirects
+        if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
           const responseClone = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
+          getCache().then((cache) => {
             cache.put(event.request, responseClone);
+            limitCacheSize(cache);
           });
         }
         return networkResponse;
       }).catch(() => {
         // Network failed - return cached version or offline fallback
         return caches.match(event.request).then((cachedResponse) => {
-          return cachedResponse || caches.match('/index.html');
+          if (cachedResponse) return cachedResponse;
+          if (event.request.mode === 'navigate') {
+            return caches.match('/index.html');
+          }
+          return new Response('Not found', { status: 404 });
         });
       })
     );
@@ -54,10 +87,12 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       caches.match(event.request).then((cachedResponse) => {
         const fetchPromise = fetch(event.request).then((networkResponse) => {
+          // Only cache basic responses (not opaque/redirects)
           if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
             const responseClone = networkResponse.clone();
-            caches.open(CACHE_NAME).then((cache) => {
+            getCache().then((cache) => {
               cache.put(event.request, responseClone);
+              limitCacheSize(cache);
             });
           }
           return networkResponse;

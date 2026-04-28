@@ -12,6 +12,7 @@
 </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com; manifest-src 'self';">
     <title>M5Capsule Pomodoro Sync</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍅</text></svg>">
     <style>
@@ -179,6 +180,12 @@
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
+        }
+
+        /* Respect prefers-reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+            .dot.sync { animation: none !important; opacity: 1 !important; }
+            button, .status { transition: none !important; }
         }
     </style>
 </head>
@@ -482,6 +489,13 @@
             statusEl.textContent = 'Web Serial not supported. Use Chrome/Edge on desktop.';
             connectBtn.disabled = true;
         }
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (connected) {
+                disconnect();
+            }
+        });
     </script>
 </body>
 </html>

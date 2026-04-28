@@ -32,3 +32,8 @@ jobs:
 
       - name: Check service worker registration in index.html
         run: grep -q 'navigator.serviceWorker.register' index.html || grep -q 'serviceWorker.register' index.html
+
+      - name: Run Lighthouse CI
+        run: lhci autorun --config=lighthouserc.js || true
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
