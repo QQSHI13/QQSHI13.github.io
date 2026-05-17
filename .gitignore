@@ -4,3 +4,8 @@ _site/
 .jekyll-cache/
 .jekyll-metadata
 vendor/
+site/
+dist/
+*.egg-info/
+.venv/
+venv/

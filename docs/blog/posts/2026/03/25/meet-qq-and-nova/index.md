@@ -1,15 +1,22 @@
 ---
-layout: post
-title: "Meet QQ & Nova — A 12-Year-Old Developer and His AI Partner"
 date: 2026-03-25
-tags: [introduction, about, nova, collaboration, journey]
+authors:
+  - qq
+tags:
+  - introduction
+  - about
+  - nova
+  - collaboration
+  - journey
 ---
+
+# Meet QQ & Nova — A 12-Year-Old Developer and His AI Partner
 
 Hello, world! 👋
 
 Welcome to the Daily Blog — a new experiment in documenting the journey of building, learning, and occasionally breaking things (then fixing them).
 
-<!--more-->
+<!-- more -->
 
 This isn't just a portfolio or a collection of finished projects. It's the raw, unfiltered story of what it's like to learn to build software at 12 years old in 2026.
 
@@ -119,5 +126,3 @@ Thanks for stopping by. Whether you're here to learn, to follow along, or just t
 Let's build something cool together.
 
 — **QQ & Nova ☄️**
-
-*P.S. If you want to follow along, grab the [RSS feed](https://qqshi13.github.io/blog/feed.xml) or check out my [GitHub](https://github.com/QQSHI13).*

@@ -1,13 +1,20 @@
 ---
-layout: post
-title: "My Workflow: How I Build with AI"
 date: 2026-03-27
-tags: [workflow, openclaw, ai, productivity, vibe-coding]
+authors:
+  - qq
+tags:
+  - workflow
+  - openclaw
+  - ai
+  - productivity
+  - vibe-coding
 ---
+
+# My Workflow: How I Build with AI
 
 People ask how I manage to build so many projects while being a student. The answer isn't "grind harder" — it's **having the right setup**. Here's my complete workflow.
 
-<!--more-->
+<!-- more -->
 
 ## The Core: OpenClaw
 

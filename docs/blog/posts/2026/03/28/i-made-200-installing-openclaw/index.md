@@ -1,10 +1,14 @@
 ---
-layout: post
-title: "I Made ¥200 Installing OpenClaw for Someone"
 date: 2026-03-28
-tags: [openclaw, tutorial, freelance]
-author: QQ
+authors:
+  - qq
+tags:
+  - openclaw
+  - tutorial
+  - freelance
 ---
+
+# I Made ¥200 Installing OpenClaw for Someone
 
 Yesterday, I did something I didn't expect: I got paid to install software.
 
@@ -12,7 +16,7 @@ A friend of a friend heard I was "good with computers" and asked if I could set 
 
 I said yes. Here's how it went.
 
-<!--more-->
+<!-- more -->
 
 ## The Challenge: Remote Installation
 
