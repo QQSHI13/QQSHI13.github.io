@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com; manifest-src 'self';">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3PSNCFVT76"></script>
+<script>
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
+
+ gtag('config', 'G-3PSNCFVT76');
+</script>
+    <meta name="google-site-verification" content="qvHXsPnnrnN-WlMw9OfyKMKA3Suaienirv0uMajvHck" />
+    <meta name="description" content="QQ (施清荃) — 12-year-old developer building web tools, desktop apps, and hardware projects with JavaScript, C++, Rust, Python, and ESP32.">
+    <meta property="og:title" content="QQ (施清荃) — 12 y/o Developer | Web, Hardware & AI Tools">
+    <meta property="og:description" content="12-year-old developer building web tools, desktop apps, and hardware projects.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qqshi13.github.io/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="QQ (施清荃) — 12 y/o Developer | Web, Hardware & AI Tools">
+    <meta name="twitter:description" content="12-year-old developer building web tools, desktop apps, and hardware projects.">
+    <title>QQ (施清荃) — 12 y/o Developer | Web, Hardware & AI Tools</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%2358a6ff'/%3E%3C/svg%3E">
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg: #0a0c10;
+            --bg-glow: #0d1117;
+            --surface: rgba(22, 27, 34, 0.6);
+            --border: rgba(48, 54, 61, 0.5);
+            --text: #e6edf3;
+            --text-secondary: #7d8590;
+            --accent: #58a6ff;
+            --accent-glow: rgba(88, 166, 255, 0.3);
+            --glass-bg: rgba(22, 27, 34, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glow-color: rgba(88, 166, 255, 0.3);
+            --glow-strong: rgba(88, 166, 255, 0.5);
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        /* Animated gradient background */
+        @keyframes haloShift {
+            0%, 100% { transform: scale(1) translate(0, 0); }
+            33% { transform: scale(1.05) translate(-2%, 1%); }
+            66% { transform: scale(0.98) translate(2%, -1%); }
+        }
+
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(88, 166, 255, 0.15), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(35, 134, 54, 0.1), transparent),
+                radial-gradient(ellipse 50% 30% at 20% 100%, rgba(139, 92, 246, 0.08), transparent);
+            pointer-events: none;
+            z-index: -1;
+            animation: haloShift 20s ease-in-out infinite;
+        }
+        
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 15s infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+        
+        /* Hero Section (Full Screen) */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 24px 80px;
+            position: relative;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Typography */
+        h1 {
+            font-size: clamp(48px, 10vw, 72px);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease-out 0.1s both;
+        }
+        
+        .age-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            background: linear-gradient(135deg, rgba(88,166,255,0.15), rgba(139,92,246,0.15));
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 12px;
+            animation: fadeInUp 0.8s ease-out 0.15s both;
+            backdrop-filter: blur(10px);
+        }
+
+        .age-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #3fb950;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #3fb950;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.9); }
+        }
+        
+        .tagline {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 8px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+        
+        .subtitle a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.2s;
+            cursor: help;
+        }
+        
+        .subtitle a:hover {
+            opacity: 0.8;
+        }
+        
+        /* Story */
+        .story {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+            animation: fadeInUp 0.8s ease-out 0.25s both;
+        }
+        
+        /* Tech Stack Badges */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.8s ease-out 0.35s both;
+        }
+        
+        .badge {
+            padding: 6px 14px;
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--accent);
+            transition: all 0.2s;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            cursor: default;
+        }
+
+        .badge:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 0 12px var(--glow-color);
+        }
+        
+        /* Social Links */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 32px;
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+        }
+        
+        .social-links a {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+        
+        .social-links svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        /* Button Row */
+        .button-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+        
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        
+        .cta-button.secondary:hover {
+            background: var(--accent);
+            color: white;
+        }
+        
+        /* CTA Button */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, var(--accent), #1f6feb);
+            border: none;
+            border-radius: 100px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 24px var(--accent-glow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px var(--accent-glow);
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .cta-button svg {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s;
+        }
+        
+        .cta-button:hover svg {
+            transform: translateX(4px);
+        }
+        
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            z-index: 10;
+            padding: 8px;
+            border-radius: 50%;
+            background: rgba(22, 27, 34, 0.4);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .scroll-indicator:hover {
+            background: rgba(88, 166, 255, 0.15);
+            border-color: rgba(88, 166, 255, 0.5);
+            box-shadow: 0 0 16px var(--glow-color);
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+        
+        .scroll-indicator svg {
+            width: 24px;
+            height: 24px;
+            color: var(--accent);
+            filter: drop-shadow(0 0 4px var(--glow-color));
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--accent);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px var(--accent-glow);
+        }
+
+        .back-to-top svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        /* Content Section */
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+        
+        /* About Me Section */
+        .about-me, .credits, .featured-projects, .learning, .contact-section {
+            margin-bottom: 80px;
+        }
+        
+        .featured-projects h2, .learning h2, .about-me h2, .credits h2, .contact-section h2 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 32px;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Featured Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        
+        .project-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            color: inherit;
+            box-shadow: 0 0 0 0 rgba(88,166,255,0), 0 8px 32px rgba(0,0,0,0);
+            transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(88, 166, 255, 0.4);
+            box-shadow: 0 0 20px var(--glow-color), 0 8px 32px rgba(0,0,0,0.4);
+        }
+        
+        .project-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+        
+        .project-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .project-card h3 a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .project-card h3 a:hover {
+            color: var(--accent);
+        }
+        
+        .project-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            flex-grow: 1;
+        }
+        
+        .project-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        
+        .project-tags span {
+            padding: 4px 10px;
+            background: rgba(88, 166, 255, 0.1);
+            border-radius: 12px;
+            font-size: 12px;
+            color: var(--accent);
+        }
+
+        .project-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .project-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            flex: 1;
+            justify-content: center;
+            min-width: max-content;
+        }
+
+        .project-btn.primary {
+            background: linear-gradient(135deg, var(--accent), #1f6feb);
+            color: white;
+            border: none;
+        }
+
+        .project-btn.primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px var(--accent-glow);
+        }
+
+        .project-btn.secondary {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid rgba(88, 166, 255, 0.3);
+        }
+
+        .project-btn.secondary:hover {
+            background: rgba(88, 166, 255, 0.1);
+            border-color: var(--accent);
+        }
+
+        .project-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+        
+        .view-all {
+            display: inline-block;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: opacity 0.2s;
+        }
+        
+        .view-all:hover {
+            opacity: 0.8;
+        }
+        
+        /* Learning Section */
+        .learning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .learning-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 0 0 0 rgba(88,166,255,0), 0 8px 32px rgba(0,0,0,0);
+            transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .learning-item:hover {
+            transform: translateY(-4px);
+            border-color: rgba(88, 166, 255, 0.4);
+            box-shadow: 0 0 20px var(--glow-color), 0 8px 32px rgba(0,0,0,0.4);
+        }
+        
+        .learning-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+        
+        .learning-item h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+        
+        .learning-item p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .about-me p {
+            color: var(--text-secondary);
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .about-me p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .about-me a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Contact Section */
+        .contact-section p {
+            color: var(--text-secondary);
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .contact-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .contact-links a:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px var(--accent-glow);
+        }
+
+        .contact-links a svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        /* Credits Section */
+        .credits p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.8;
+        }
+        
+        .credits a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            padding: 40px 24px;
+            border-top: 1px solid var(--border);
+        }
+        
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        /* Focus styles */
+        a:focus-visible,
+        button:focus-visible,
+        [tabindex]:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        /* Skip navigation */
+        .skip-nav {
+            position: absolute;
+            top: -100%;
+            left: 0;
+            padding: 12px 24px;
+            background: var(--accent);
+            color: var(--bg);
+            font-weight: 600;
+            z-index: 9999;
+            text-decoration: none;
+        }
+        .skip-nav:focus {
+            top: 0;
+        }
+
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .revealed { opacity: 1; transform: translateY(0); }
+
+        #cursor-glow {
+            position: fixed;
+            pointer-events: none;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(88,166,255,0.12) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            h1 {
+                font-size: clamp(36px, 12vw, 56px);
+            }
+            
+            .cta-button {
+                padding: 16px 32px;
+                font-size: 16px;
+            }
+            
+            .content {
+                padding: 60px 24px;
+            }
+            
+            .about-me h2, .credits h2, .contact-section h2 {
+                font-size: 24px;
+            }
+            
+            .about-me p {
+                font-size: 16px;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+        /* Respect prefers-reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .bg-gradient, .particle, .reveal, .scroll-indicator, .age-badge::before {
+                animation: none !important;
+            }
+            h1, .tagline, .subtitle, .age-badge {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .project-card, .learning-item {
+                transition: none !important;
+                transform: none !important;
+            }
+            .project-card:hover, .learning-item:hover {
+                transform: none !important;
+                box-shadow: none !important;
+            }
+            .scroll-indicator {
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
+    <div class="bg-gradient"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Hero Section (Full Screen) -->
+    <section class="hero" id="main-content">
+        <h1>QQ</h1>
+        <div class="age-badge">12 y/o Developer</div>
+        <p class="tagline">Hi! I'm QQ (施清荃), a developer building tools with AI</p>
+        
+        <!-- Tech Stack Badges -->
+        <div class="tech-stack">
+            <span class="badge">JavaScript</span>
+            <span class="badge">C++</span>
+            <span class="badge">Rust</span>
+            <span class="badge">Python</span>
+            <span class="badge">ESP32</span>
+            <span class="badge">Web</span>
+        </div>
+        
+        <p class="subtitle">Assisted by <a href="#about" title="Nova is my AI assistant — we build projects together">Nova ☄️</a></p>
+        
+        <div class="button-row">
+            <a href="projects.html" class="cta-button">
+                View All Projects
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+            
+            <a href="blog/index.html" class="cta-button secondary">
+                Read Blog
+            </a>
+        </div>
+        
+        <!-- Social Links -->
+        <div class="social-links">
+            <a href="https://www.github.com/QQSHI13" rel="noopener noreferrer" aria-label="GitHub">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+            <a href="mailto:shizheng327@gmail.com" aria-label="Email">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </a>
+        </div>
+        
+        <a href="#about" class="scroll-indicator" aria-label="Scroll to content">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </a>
+    </section>
+    
+    <!-- Content Section (Scrollable) -->
+    <section class="content" id="about">
+        <!-- Featured Projects -->
+        <section class="featured-projects">
+            <h2>Tools & Skills</h2>
+            <div class="projects-grid">
+                <div class="project-card reveal">
+                    <div class="project-icon">🧹</div>
+                    <h3><a href="https://www.npmjs.com/package/claw-clean" target="_blank" rel="noopener noreferrer">claw-clean</a></h3>
+                    <p>Interactive session cleanup tool for OpenClaw — TUI menu with arrow-key navigation</p>
+                    <div class="project-tags">
+                        <span>Bash</span>
+                        <span>CLI</span>
+                        <span>npm</span>
+                    </div>
+                    <div class="project-actions">
+                        <a href="https://www.npmjs.com/package/claw-clean" class="project-btn primary" target="_blank" rel="noopener noreferrer">npm ↗</a>
+                    </div>
+                </div>
+                
+                <div class="project-card reveal">
+                    <div class="project-icon">🖥️</div>
+                    <h3><a href="https://clawhub.com/skill/wincontrol" target="_blank" rel="noopener noreferrer">WinControl</a></h3>
+                    <p>AI remote control for Windows desktop — capture screenshots and control mouse/keyboard via HTTP API</p>
+                    <div class="project-tags">
+                        <span>Python</span>
+                        <span>AI Tool</span>
+                        <span>ClawHub</span>
+                    </div>
+                    <div class="project-actions">
+                        <a href="https://clawhub.com/skill/wincontrol" class="project-btn primary" target="_blank" rel="noopener noreferrer">Try it →</a>
+                    </div>
+                </div>
+                
+                <div class="project-card reveal">
+                    <div class="project-icon">🎯</div>
+                    <h3><a href="/24.html" rel="noopener noreferrer">24 Point Solver</a></h3>
+                    <p>Math puzzle game — make 24 using four numbers and basic operations</p>
+                    <div class="project-tags">
+                        <span>JavaScript</span>
+                        <span>Game</span>
+                    </div>
+                    <div class="project-actions">
+                        <a href="/24.html" class="project-btn primary" rel="noopener noreferrer">Play →</a>
+                    </div>
+                </div>
+                
+                <div class="project-card reveal">
+                    <div class="project-icon">⏱️</div>
+                    <h3><a href="https://qqshi13.github.io/flow/" rel="noopener noreferrer">Flow</a></h3>
+                    <p>Pomodoro timer with PWA support, keyboard shortcuts, and customizable settings</p>
+                    <div class="project-tags">
+                        <span>JavaScript</span>
+                        <span>PWA</span>
+                    </div>
+                    <div class="project-actions">
+                        <a href="https://qqshi13.github.io/flow/" class="project-btn primary" rel="noopener noreferrer">Try it →</a>
+                    </div>
+                </div>
+                
+                <div class="project-card reveal">
+                    <div class="project-icon">📦</div>
+                    <h3><a href="https://qqshi13.github.io/droptransfer/" rel="noopener noreferrer">DropTransfer</a></h3>
+                    <p>P2P file sharing with WebRTC, no server needed</p>
+                    <div class="project-tags">
+                        <span>WebRTC</span>
+                        <span>P2P</span>
+                    </div>
+                    <div class="project-actions">
+                        <a href="https://qqshi13.github.io/droptransfer/" class="project-btn primary" rel="noopener noreferrer">Try it →</a>
+                    </div>
+                </div>
+                
+                <div class="project-card reveal">
+                    <div class="project-icon">⏲️</div>
+                    <h3><a href="https://github.com/QQSHI13/M5Timer" target="_blank" rel="noopener noreferrer">M5Timer</a></h3>
+                    <p>Hardware Pomodoro timer for M5Capsule with web sync</p>
+                    <div class="project-tags">
+                        <span>C++</span>
+                        <span>ESP32</span>
+                    </div>
+                    <div class="project-actions">
+                        <a href="https://github.com/QQSHI13/M5Timer" class="project-btn primary" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+                    </div>
+                </div>
+
+                <div class="project-card reveal" style="opacity: 0.7;">
+                    <div class="project-icon">🔮</div>
+                    <h3>More Coming Soon</h3>
+                    <p>Always building something new. Check back for updates — or follow on GitHub to see work in progress!</p>
+                    <div class="project-tags">
+                        <span>Open Source</span>
+                        <span>WIP</span>
+                    </div>
+                    <div class="project-actions">
+                        <a href="https://github.com/QQSHI13?tab=repositories" class="project-btn secondary" target="_blank" rel="noopener noreferrer">Follow ↗</a>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="projects.html" class="view-all">View all projects →</a>
+        </section>
+        
+        <!-- What I'm Learning -->
+        <section class="learning">
+            <h2>Currently Learning</h2>
+            <div class="learning-grid">
+                <div class="learning-item reveal">
+                    <div class="learning-icon">🦀</div>
+                    <h3>Rust</h3>
+                    <p>Systems programming and WebAssembly</p>
+                </div>
+                <div class="learning-item reveal">
+                    <div class="learning-icon">🧠</div>
+                    <h3>AI/ML</h3>
+                    <p>LLMs, fine-tuning, and agent systems</p>
+                </div>
+                <div class="learning-item reveal">
+                    <div class="learning-icon">🔧</div>
+                    <h3>Embedded</h3>
+                    <p>ESP32, sensors, and IoT projects</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="about-me reveal">
+            <h2>About Me</h2>
+            <p>I create web tools, desktop apps, and hardware projects that solve real problems. From Pomodoro timers to P2P file sharing, I love turning ideas into working products.</p>
+            <p>I use a dual-boot setup with Windows and Ubuntu, and I love exploring new technologies. My goal is to create tools that make people's lives easier.</p>
+            <p>I work with <a href="#about" title="Nova is my AI assistant">Nova ☄️</a> (my AI assistant) to build projects faster and learn along the way.</p>
+        </section>
+
+        <section class="contact-section reveal">
+            <h2>Get In Touch</h2>
+            <p>Want to collaborate, have feedback, or just want to say hi? I'm always open to chatting about tech, projects, or ideas.</p>
+            <div class="contact-links">
+                <a href="mailto:shizheng327@gmail.com">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    Email Me
+                </a>
+                <a href="https://github.com/QQSHI13" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                </a>
+            </div>
+        </section>
+        
+        <section class="credits">
+            <h2>Credits</h2>
+            <p>Built with ❤️ by QQ & Nova ☄️</p>
+        </section>
+    </section>
+    
+    <footer>
+        <p>&copy; 2026 QQ. All rights reserved. · <a href="mailto:shizheng327@gmail.com">shizheng327@gmail.com</a></p>
+    </footer>
+    
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
+
+    <div id="cursor-glow"></div>
+    <script>
+    // Floating particles
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+        particlesContainer.appendChild(particle);
+    }
+
+    // Cursor glow
+    const glow = document.getElementById('cursor-glow');
+    document.addEventListener('mousemove', e => {
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+        glow.style.opacity = '1';
+    });
+    document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('revealed');
+                observer.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    
+    // Back to top button
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+    backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    // Service Worker for PWA
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then(function(reg) { console.log('SW registered:', reg.scope); })
+            .catch(function(err) { console.error('SW registration failed:', err); });
+    }
+</script>
+</body>
+</html>
