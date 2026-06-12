@@ -35,11 +35,25 @@ jobs:
       - name: Install DocsForge
         run: pip install docsforge
 
-      - name: Build site
+      - name: Build blog with DocsForge
         run: docsforge build
 
-      - name: Copy static homepage
-        run: cp docs/index.html site/index.html
+      - name: Copy static HTML files (preserve non-blog pages)
+        run: |
+          # Copy all static HTML files from docs/ to site/
+          # This preserves homepage, projects, and other non-blog pages
+          cp docs/index.html site/index.html
+          cp docs/projects.html site/projects.html
+          cp docs/24.html site/24.html
+          cp docs/404.html site/404.html
+          cp docs/web-sync.html site/web-sync.html
+
+      - name: Copy other static assets
+        run: |
+          cp docs/manifest.json site/manifest.json
+          cp docs/robots.txt site/robots.txt
+          cp docs/sitemap.xml site/sitemap.xml
+          cp docs/sw.js site/sw.js
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
