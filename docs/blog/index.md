@@ -9,7 +9,7 @@ hide:
 
 Daily writings from a 12-year-old developer building the future, one commit at a time.
 
-[:octicons-rss-24: RSS Feed](../feed_rss_created.xml)
+[:octicons-rss-24: RSS Feed](feed_rss_created.xml)
 
 ---
 

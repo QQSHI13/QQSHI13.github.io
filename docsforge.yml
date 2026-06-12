@@ -2,6 +2,10 @@ site_name: QQ's Blog
 site_url: https://qqshi13.github.io
 site_author: QQ
 
+nav:
+  - Home: index.md
+  - Blog: blog/
+
 repo_url: https://github.com/QQSHI13/QQSHI13.github.io
 repo_name: QQSHI13/QQSHI13.github.io
 
@@ -35,7 +39,6 @@ plugins:
         - hardware
         - story
       pagination_per_page: 10
-  - search
   - tags
 
 extra:
