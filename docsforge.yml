@@ -50,3 +50,5 @@ extra:
       link: https://qqshi13.github.io/blog/feed_rss_created.xml
 
 copyright: Copyright © 2025–2026 QQ — GPL-3.0
+hooks:
+  - sw_passthrough.py
