@@ -13,25 +13,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
+      - name: Setup Python
+        uses: actions/setup-python@v6
         with:
-          node-version: 22
+          python-version: '3.12'
 
-      - name: Install Lighthouse CI
-        run: npm install -g @lhci/cli@0.14.x
+      - name: Install DocsForge
+        run: pip install docsforge
+
+      - name: Build site
+        run: docsforge build
 
       - name: Manifest exists
-        run: test -f manifest.json
+        run: test -f site/manifest.json
 
       - name: Service Worker exists
-        run: test -f sw.js
+        run: test -f site/sw.js
+
+      - name: Cache manifest exists
+        run: test -f site/cache-manifest.json
 
       - name: Check manifest link in index.html
-        run: grep -q '<link rel="manifest"' index.html
+        run: grep -q '<link rel="manifest"' site/index.html
 
       - name: Check service worker registration in index.html
-        run: grep -q 'navigator.serviceWorker.register' index.html || grep -q 'serviceWorker.register' index.html
+        run: grep -q 'navigator.serviceWorker.register' site/index.html || grep -q 'serviceWorker.register' site/index.html
 
       - name: Run Lighthouse CI
         run: lhci autorun --config=lighthouserc.js || true

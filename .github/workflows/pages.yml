@@ -36,22 +36,10 @@ jobs:
       - name: Build blog with DocsForge
         run: docsforge build
 
-      - name: Copy static HTML files (preserve non-blog pages)
-        run: |
-          # Copy all static HTML files from docs/ to site/
-          # This preserves homepage, projects, and other non-blog pages
-          cp docs/index.html site/index.html
-          cp docs/projects.html site/projects.html
-          cp docs/24.html site/24.html
-          cp docs/404.html site/404.html
-          cp docs/web-sync.html site/web-sync.html
-
-      - name: Copy other static assets
-        run: |
-          cp docs/manifest.json site/manifest.json
-          cp docs/robots.txt site/robots.txt
-          cp docs/sitemap.xml site/sitemap.xml
-          cp docs/sw.js site/sw.js
+      # The build copies static files from docs/ into site/ (index.html,
+      # projects.html, 24.html, 404.html, web-sync.html, robots.txt, ...) and
+      # generates sw.js / manifest.json / sitemap.xml itself. No manual copies
+      # — they would clobber DocsForge's generated output with stale files.
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
