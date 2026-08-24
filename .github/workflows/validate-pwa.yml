@@ -37,9 +37,45 @@ jobs:
         run: grep -q '<link rel="manifest"' site/index.html
 
       - name: Check service worker registration in index.html
-        run: grep -q 'navigator.serviceWorker.register' site/index.html || grep -q 'serviceWorker.register' site/index.html
+        run: grep -q 'serviceWorker.register' site/index.html
 
+      - name: Validate manifest fields and icons
+        run: |
+          python3 << 'PY'
+          import json, os, sys, urllib.parse
+          with open('site/manifest.json') as f:
+              m = json.load(f)
+          required = ['name', 'start_url', 'display', 'icons']
+          missing = [k for k in required if k not in m]
+          if missing:
+              print(f"::error::site/manifest.json missing fields: {', '.join(missing)}")
+              sys.exit(1)
+          icons = m.get('icons')
+          if not isinstance(icons, list) or not icons:
+              print("::error::site/manifest.json has no icons")
+              sys.exit(1)
+          for icon in icons:
+              src = icon.get('src', '')
+              if not src or src.startswith(('data:', 'http://', 'https://')):
+                  continue
+              path = os.path.join('site', urllib.parse.unquote(src.split('?')[0].lstrip('./')))
+              if not os.path.isfile(path):
+                  print(f"::error::manifest icon not found in build output: {path}")
+                  sys.exit(1)
+          print("site/manifest.json is valid and its icons exist")
+          PY
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli@0.14.x
+
+      # Lighthouse 12 removed the "pwa" category, so PWA conformance is asserted
+      # by the explicit steps above. Lighthouse gates the remaining categories.
       - name: Run Lighthouse CI
-        run: lhci autorun --config=lighthouserc.js || true
+        run: lhci autorun --config=lighthouserc.json
         env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.GITHUB_TOKEN }}
