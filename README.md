@@ -21,6 +21,7 @@ This is the main landing page for QQ's developer portfolio. It showcases all the
 - **[Time & Flow](https://qqshi13.github.io/flow/)** — Minimalist Pomodoro timer
 - **[DropTransfer](https://qqshi13.github.io/droptransfer/)** — P2P file sharing via WebRTC
 - **[CollaBoard](https://qqshi13.github.io/collaboard/)** — Real-time collaborative whiteboard
+- **[BSOD Studio](https://qqshi13.github.io/bsod-studio/)** — Design your own Blue Screen of Death: any era, animated, PNG/GIF export
 - **[Quick Notes](https://github.com/QQSHI13/quick-notes)** — Windows Command Palette extension
 
 ### Hardware
