@@ -3,17 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com; manifest-src 'self';">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3PSNCFVT76"></script>
-<script>
- window.dataLayer = window.dataLayer || [];
- function gtag(){dataLayer.push(arguments);}
- gtag('js', new Date());
-
- gtag('config', 'G-3PSNCFVT76');
-</script>
-    <meta name="google-site-verification" content="qvHXsPnnrnN-WlMw9OfyKMKA3Suaienirv0uMajvHck" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; manifest-src 'self';">
+<meta name="google-site-verification" content="qvHXsPnnrnN-WlMw9OfyKMKA3Suaienirv0uMajvHck" />
     <meta name="description" content="QQ (施清荃) — 13-year-old developer building web tools, desktop apps, and hardware projects with JavaScript, C++, Rust, Python, and ESP32.">
     <meta property="og:title" content="QQ (施清荃) — 13 y/o Developer | Web, Hardware & AI Tools">
     <meta property="og:description" content="13-year-old developer building web tools, desktop apps, and hardware projects.">
@@ -708,6 +699,7 @@
             section { padding: 64px 0; }
             .stats { gap: 26px; }
             .stat-value { font-size: 25px; }
+            .nav-links a { padding: 10px 12px; }
             .nav-links a:nth-child(2) { display: none; }
         }
 
