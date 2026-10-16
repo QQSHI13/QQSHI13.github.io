@@ -1,6 +1,7 @@
 site_name: QQ's Blog
 site_url: https://qqshi13.github.io/
 site_author: QQ
+site_description: QQ (施清荃) — 13-year-old developer building web tools, desktop apps, hardware, and AI-assisted experiments.
 
 nav:
   - title: Blog
@@ -43,6 +44,20 @@ plugins:
   - tags
 
 extra:
+  pwa:
+    icons:
+      - src: assets/icon-192.png
+        sizes: 192x192
+        type: image/png
+        purpose: any
+      - src: assets/icon-512.png
+        sizes: 512x512
+        type: image/png
+        purpose: any
+      - src: assets/icon-maskable-512.png
+        sizes: 512x512
+        type: image/png
+        purpose: maskable
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/QQSHI13
