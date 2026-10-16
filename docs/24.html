@@ -4,7 +4,16 @@
  <title>24点解法计算器</title>
  <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src https://fonts.gstatic.com; connect-src 'self';">
+ <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; img-src 'self' data:;">
+ <meta name="description" content="24 点解法计算器 —— 输入四个数字，自动给出所有能得到 24 的算式，也可以随机生成题目。">
+ <meta property="og:title" content="24点解法计算器">
+ <meta property="og:description" content="输入四个数字，自动列出所有能得到 24 的算式。">
+ <meta property="og:type" content="website">
+ <meta property="og:url" content="https://qqshi13.github.io/24.html">
+ <meta property="og:image" content="https://qqshi13.github.io/assets/og.png">
+ <meta name="theme-color" content="#1a1a2e">
+ <link rel="manifest" href="manifest.json">
+ <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%234A90E2'/%3E%3C/svg%3E">
  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap" rel="stylesheet">
  <style>
  :root {
@@ -47,7 +56,7 @@
  transition: transform 0.3s ease;
  }
 
- h2 {
+ h1 {
  color: var(--text-color);
  text-align: center;
  margin-bottom: 1.5rem;
@@ -161,7 +170,7 @@
 </head>
 <body>
  <div class="container">
- <h2>🎮 24点游戏解法计算器</h2>
+ <h1>🎮 24点游戏解法计算器</h1>
  <div class="input-group">
  <input type="number" id="num1" placeholder="数字" required min="1" max="13">
  <input type="number" id="num2" placeholder="数字" required min="1" max="13">
@@ -304,6 +313,12 @@
  solutions.map((sol, idx) => `<div class="solution-item">${idx+1}. ${sol}</div>`).join('')
  : '<div class="solution-item">😞 未能找到有效解法</div>';
  }, 50);
+ }
+ </script>
+ <script>
+ // Same offline cache the rest of the site uses (site-wide service worker).
+ if ('serviceWorker' in navigator) {
+   navigator.serviceWorker.register('/sw.js').catch(function () {});
  }
  </script>
 </body>
