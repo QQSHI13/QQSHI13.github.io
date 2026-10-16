@@ -25,1186 +25,1219 @@
     <title>QQ (施清荃) — 13 y/o Developer | Web, Hardware & AI Tools</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%2358a6ff'/%3E%3C/svg%3E">
     <link rel="manifest" href="manifest.json">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#07090c">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        /* ==========================================================
+           Design tokens
+           ========================================================== */
         :root {
-            --bg: #0a0c10;
-            --bg-glow: #0d1117;
-            --surface: rgba(22, 27, 34, 0.6);
-            --border: rgba(48, 54, 61, 0.5);
-            --text: #e6edf3;
-            --text-secondary: #7d8590;
-            --accent: #58a6ff;
-            --accent-glow: rgba(88, 166, 255, 0.3);
-            --glass-bg: rgba(22, 27, 34, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glow-color: rgba(88, 166, 255, 0.3);
-            --glow-strong: rgba(88, 166, 255, 0.5);
+            --bg:            #07090c;
+            --bg-soft:       #0b0e13;
+            --surface:       #10141a;
+            --surface-2:     #151a22;
+            --line:          rgba(255, 255, 255, 0.08);
+            --line-strong:   rgba(255, 255, 255, 0.14);
+
+            --text:          #e9eef6;
+            --text-2:        #9aa4b2;
+            --text-3:        #6b7583;
+
+            --accent:        #58a6ff;
+            --accent-2:      #a371f7;
+            --green:         #3fb950;
+            --amber:         #f0883e;
+
+            --radius:        18px;
+            --radius-sm:     12px;
+            --wrap:          1120px;
+            --mono:          'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+            --shadow-sm:     0 1px 2px rgba(0,0,0,0.4);
+            --shadow-lg:     0 18px 50px rgba(0,0,0,0.5);
         }
-        
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 96px;
         }
-        
+
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
             color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 16px;
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: -1;
-        }
-        
-        /* Animated gradient background */
-        @keyframes haloShift {
-            0%, 100% { transform: scale(1) translate(0, 0); }
-            33% { transform: scale(1.05) translate(-2%, 1%); }
-            66% { transform: scale(0.98) translate(2%, -1%); }
+        ::selection { background: rgba(88, 166, 255, 0.3); color: #fff; }
+
+        :focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+            border-radius: 6px;
         }
 
-        .bg-gradient {
+        ::-webkit-scrollbar { width: 11px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: #232a33; border-radius: 8px; border: 3px solid var(--bg); }
+        ::-webkit-scrollbar-thumb:hover { background: #333c47; }
+
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { color: #7cb8ff; }
+
+        .wrap { width: min(var(--wrap), 100% - 48px); margin-inline: auto; }
+
+        .mono { font-family: var(--mono); }
+
+        /* ==========================================================
+           Ambient background
+           ========================================================== */
+        .ambience {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background:
-                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(88, 166, 255, 0.15), transparent),
-                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(35, 134, 54, 0.1), transparent),
-                radial-gradient(ellipse 50% 30% at 20% 100%, rgba(139, 92, 246, 0.08), transparent);
-            pointer-events: none;
+            inset: 0;
             z-index: -1;
-            animation: haloShift 20s ease-in-out infinite;
-        }
-        
-        /* Floating particles */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
             pointer-events: none;
-            z-index: -1;
             overflow: hidden;
         }
-        
-        .particle {
+
+        .ambience::after {
+            content: '';
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--accent);
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 45% at 50% -10%, rgba(88,166,255,0.13), transparent 70%),
+                radial-gradient(ellipse 55% 40% at 88% 78%, rgba(163,113,247,0.10), transparent 70%);
+        }
+
+        .orb {
+            position: absolute;
             border-radius: 50%;
-            opacity: 0;
-            animation: float 15s infinite;
+            filter: blur(100px);
+            opacity: 0.5;
         }
-        
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        .orb-1 { width: 42vw; height: 42vw; min-width: 340px; min-height: 340px; top: -14vw; left: -10vw; background: rgba(88,166,255,0.28); animation: drift 26s ease-in-out infinite; }
+        .orb-2 { width: 38vw; height: 38vw; min-width: 300px; min-height: 300px; top: 30vh; right: -14vw; background: rgba(163,113,247,0.20); animation: drift 32s ease-in-out infinite reverse; }
+
+        @keyframes drift {
+            0%, 100% { transform: translate3d(0,0,0) scale(1); }
+            50%      { transform: translate3d(3vw, 3vh, 0) scale(1.07); }
         }
-        
-        /* Hero Section (Full Screen) */
-        .hero {
-            min-height: 100vh;
+
+        /* ==========================================================
+           Navigation (no brand — links only)
+           ========================================================== */
+        .nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 50;
+            border-bottom: 1px solid transparent;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .nav.scrolled {
+            background: rgba(7, 9, 12, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom-color: var(--line);
+        }
+
+        .nav-inner {
+            width: min(var(--wrap), 100% - 48px);
+            margin-inline: auto;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 40px 24px 80px;
-            position: relative;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 18px 0;
         }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Typography */
-        h1 {
-            font-size: clamp(48px, 10vw, 72px);
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 0.8s ease-out 0.1s both;
-        }
-        
-        .age-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 16px;
-            background: linear-gradient(135deg, rgba(88,166,255,0.15), rgba(139,92,246,0.15));
-            border: 1px solid rgba(88, 166, 255, 0.3);
+
+        .nav-links { display: flex; align-items: center; gap: 4px; }
+
+        .nav-links a {
+            padding: 8px 14px;
             border-radius: 100px;
             font-size: 14px;
-            font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 12px;
-            animation: fadeInUp 0.8s ease-out 0.15s both;
-            backdrop-filter: blur(10px);
-        }
-
-        .age-badge::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: #3fb950;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #3fb950;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(0.9); }
-        }
-        
-        .tagline {
-            font-size: 20px;
-            color: var(--text-secondary);
-            font-weight: 400;
-            margin-bottom: 8px;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-        }
-        
-        .subtitle {
-            font-size: 16px;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            animation: fadeInUp 0.8s ease-out 0.3s both;
-        }
-        
-        .subtitle a {
-            color: var(--accent);
-            text-decoration: none;
             font-weight: 500;
-            transition: opacity 0.2s;
-            cursor: help;
-        }
-        
-        .subtitle a:hover {
-            opacity: 0.8;
-        }
-        
-        /* Story */
-        .story {
-            font-size: 18px;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 32px;
-            line-height: 1.6;
-            animation: fadeInUp 0.8s ease-out 0.25s both;
-        }
-        
-        /* Tech Stack Badges */
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 24px;
-            animation: fadeInUp 0.8s ease-out 0.35s both;
-        }
-        
-        .badge {
-            padding: 6px 14px;
-            background: var(--surface);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--accent);
-            transition: all 0.2s;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            cursor: default;
+            color: var(--text-2);
+            transition: color 0.2s ease, background 0.2s ease;
         }
 
-        .badge:hover {
-            background: var(--accent);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 0 12px var(--glow-color);
-        }
-        
-        /* Social Links */
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-top: 32px;
-            animation: fadeInUp 0.8s ease-out 0.5s both;
-        }
-        
-        .social-links a {
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            color: var(--text-secondary);
-            transition: all 0.2s;
-        }
-        
-        .social-links a:hover {
-            background: var(--accent);
-            color: white;
-            transform: translateY(-2px);
-            border-color: var(--accent);
-        }
-        
-        .social-links svg {
-            width: 20px;
-            height: 20px;
-        }
-        
-        /* Button Row */
-        .button-row {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 0.8s ease-out 0.4s both;
-        }
-        
-        .cta-button.secondary {
-            background: transparent;
-            border: 2px solid var(--accent);
+        .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+        .nav-links a.is-active { color: var(--text); background: rgba(255,255,255,0.06); }
+
+        .nav-links a.nav-cta {
             color: var(--accent);
+            border: 1px solid rgba(88,166,255,0.32);
+            margin-left: 6px;
         }
-        
-        .cta-button.secondary:hover {
-            background: var(--accent);
-            color: white;
+        .nav-links a.nav-cta:hover { background: rgba(88,166,255,0.12); color: var(--accent); }
+
+        /* ==========================================================
+           Hero
+           ========================================================== */
+        .hero {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 96vh;
+            padding: 140px 0 72px;
         }
-        
-        /* CTA Button */
-        .cta-button {
+
+        .hero-title {
+            font-size: clamp(64px, 13vw, 148px);
+            font-weight: 800;
+            letter-spacing: -0.055em;
+            line-height: 0.95;
+            background: linear-gradient(160deg, #ffffff 10%, var(--accent) 65%, var(--accent-2) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .hero-role {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            padding: 20px 40px;
-            background: linear-gradient(135deg, var(--accent), #1f6feb);
-            border: none;
+            gap: 9px;
+            align-self: flex-start;
+            margin-top: 22px;
+            padding: 7px 15px;
             border-radius: 100px;
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 24px var(--accent-glow);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px var(--accent-glow);
-        }
-        
-        .cta-button:hover::before {
-            left: 100%;
-        }
-        
-        .cta-button svg {
-            width: 24px;
-            height: 24px;
-            transition: transform 0.3s;
-        }
-        
-        .cta-button:hover svg {
-            transform: translateX(4px);
-        }
-        
-        /* Scroll Indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-            cursor: pointer;
-            z-index: 10;
-            padding: 8px;
-            border-radius: 50%;
-            background: rgba(22, 27, 34, 0.4);
-            border: 1px solid rgba(88, 166, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .scroll-indicator:hover {
-            background: rgba(88, 166, 255, 0.15);
-            border-color: rgba(88, 166, 255, 0.5);
-            box-shadow: 0 0 16px var(--glow-color);
-        }
-        
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
-        }
-        
-        .scroll-indicator svg {
-            width: 24px;
-            height: 24px;
-            color: var(--accent);
-            filter: drop-shadow(0 0 4px var(--glow-color));
-        }
-        
-        /* Back to Top Button */
-        .back-to-top {
-            position: fixed;
-            bottom: 32px;
-            right: 32px;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            color: var(--accent);
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-            z-index: 100;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.3);
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .back-to-top:hover {
-            background: var(--accent);
-            color: white;
-            border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px var(--accent-glow);
-        }
-
-        .back-to-top svg {
-            width: 20px;
-            height: 20px;
-        }
-        
-        /* Content Section */
-        .content {
-            max-width: 1180px;
-            margin: 0 auto;
-            padding: 80px 24px;
-        }
-        
-        /* About Me Section */
-        .about-me, .credits, .featured-projects, .learning, .contact-section {
-            margin-bottom: 80px;
-        }
-        
-        .featured-projects h2, .learning h2, .about-me h2, .credits h2, .contact-section h2 {
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 32px;
-            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* small uppercase kicker above a section heading */
-        .eyebrow {
-            display: block;
+            border: 1px solid rgba(88,166,255,0.28);
+            background: rgba(88,166,255,0.07);
+            font-family: var(--mono);
             font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: var(--accent);
-            opacity: 0.9;
-            margin-bottom: 10px;
-        }
-
-        /* hero stat strip */
-        .hero-stats {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 36px;
-            margin-top: 36px;
-            animation: fadeInUp 0.8s ease-out 0.55s both;
-        }
-
-        .hero-stats div {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-        }
-
-        .hero-stats strong {
-            font-size: 26px;
-            font-weight: 700;
-            line-height: 1.1;
-            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-stats span {
-            font-size: 11px;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: var(--text-secondary);
-        }
-        
-        /* Featured Projects */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 24px;
-        }
-        
-        .project-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 24px;
-            color: inherit;
-            box-shadow: 0 0 0 0 rgba(88,166,255,0), 0 8px 32px rgba(0,0,0,0);
-            transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
+            color: var(--accent);
+            animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
         }
 
-        /* accent line that lights up on hover */
-        .project-card::after {
+        .hero-role::before {
+            content: '';
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 10px var(--green);
+        }
+
+        .hero-lede {
+            max-width: 620px;
+            margin-top: 26px;
+            font-size: clamp(17px, 2vw, 20px);
+            line-height: 1.6;
+            color: var(--text-2);
+            animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+        }
+
+        .hero-lede strong { color: var(--text); font-weight: 600; }
+
+        .stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 28px;
+            animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both;
+        }
+
+        .stack span {
+            padding: 5px 11px;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            background: rgba(255,255,255,0.02);
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--text-2);
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 34px;
+            animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.24s both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 22px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, var(--accent), #2f7ce0);
+            box-shadow: 0 8px 24px rgba(88,166,255,0.28);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .btn:hover { color: #fff; transform: translateY(-2px); box-shadow: 0 12px 30px rgba(88,166,255,0.4); }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--line-strong);
+            box-shadow: none;
+        }
+        .btn-ghost:hover { color: var(--text); background: rgba(255,255,255,0.04); box-shadow: none; }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px 20px;
+            margin-top: 34px;
+            animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+        }
+
+        .icon-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px; height: 40px;
+            border-radius: 11px;
+            border: 1px solid var(--line);
+            color: var(--text-2);
+            background: rgba(255,255,255,0.02);
+            transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        }
+        .icon-link:hover { color: var(--accent); border-color: rgba(88,166,255,0.4); transform: translateY(-2px); }
+        .icon-link svg { width: 18px; height: 18px; }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 40px;
+            animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.36s both;
+        }
+
+        .stat-value {
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(140deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            display: block;
+            margin-top: 2px;
+            font-family: var(--mono);
+            font-size: 10.5px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==========================================================
+           Sections
+           ========================================================== */
+        section { padding: 88px 0; }
+        section + section { border-top: 1px solid var(--line); }
+
+        .kicker {
+            display: block;
+            margin-bottom: 12px;
+            font-family: var(--mono);
+            font-size: 11.5px;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        h2 {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 700;
+            letter-spacing: -0.035em;
+            line-height: 1.1;
+        }
+
+        .section-lede {
+            max-width: 620px;
+            margin-top: 14px;
+            font-size: 16px;
+            color: var(--text-2);
+        }
+
+        .section-foot { margin-top: 30px; }
+
+        /* ==========================================================
+           Work grid
+           ========================================================== */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+            margin-top: 44px;
+        }
+
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--line);
+            background: linear-gradient(180deg, rgba(255,255,255,0.026), rgba(255,255,255,0)) , var(--surface);
+            overflow: hidden;
+            transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.28s ease, box-shadow 0.28s ease;
+        }
+
+        .card::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 2px;
-            background: linear-gradient(90deg, var(--accent), #a371f7);
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.28s ease;
         }
 
-        .project-card:hover::after {
-            opacity: 1;
-        }
-
-        .project-card:hover {
+        .card:hover {
             transform: translateY(-4px);
-            border-color: rgba(88, 166, 255, 0.4);
-            box-shadow: 0 0 20px var(--glow-color), 0 8px 32px rgba(0,0,0,0.4);
+            border-color: rgba(88,166,255,0.38);
+            box-shadow: var(--shadow-lg);
         }
-        
-        .project-icon {
-            width: 52px;
-            height: 52px;
+
+        .card:hover::before { opacity: 1; }
+
+        .card-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .card-icon {
             display: grid;
             place-items: center;
-            border-radius: 14px;
-            background: rgba(88, 166, 255, 0.10);
-            border: 1px solid rgba(88, 166, 255, 0.18);
-            font-size: 26px;
+            width: 46px; height: 46px;
+            border-radius: 13px;
+            font-size: 22px;
             line-height: 1;
-            margin-bottom: 16px;
-        }
-        
-        .project-card h3 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text);
+            background: var(--surface-2);
+            border: 1px solid var(--line);
         }
 
-        .project-card h3 a {
-            color: inherit;
-            text-decoration: none;
-            transition: color 0.2s;
+        .kind {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-family: var(--mono);
+            font-size: 10.5px;
+            font-weight: 500;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-3);
         }
 
-        .project-card h3 a:hover {
-            color: var(--accent);
+        .kind::before {
+            content: '';
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            box-shadow: 0 0 9px currentColor;
         }
-        
-        .project-card p {
-            color: var(--text-secondary);
+
+        .kind-live     { color: var(--green); }
+        .kind-library  { color: var(--accent-2); }
+        .kind-hardware { color: var(--amber); }
+        .kind-tool     { color: var(--accent); }
+
+        .card h3 { font-size: 19px; font-weight: 650; letter-spacing: -0.015em; }
+        .card h3 a { color: var(--text); }
+        .card h3 a:hover { color: var(--accent); }
+
+        .card p {
+            margin-top: 10px;
             font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 12px;
+            line-height: 1.62;
+            color: var(--text-2);
             flex-grow: 1;
         }
-        
-        .project-tags {
+
+        .tags {
             display: flex;
-            gap: 8px;
             flex-wrap: wrap;
-            margin-bottom: 16px;
-        }
-        
-        .project-tags span {
-            padding: 4px 10px;
-            background: rgba(88, 166, 255, 0.1);
-            border-radius: 12px;
-            font-size: 12px;
-            color: var(--accent);
+            gap: 7px;
+            margin: 18px 0 20px;
         }
 
-        .project-actions {
+        .tags span {
+            padding: 3px 9px;
+            border-radius: 7px;
+            border: 1px solid var(--line);
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--text-3);
+        }
+
+        .card-actions {
             display: flex;
             gap: 10px;
-            flex-wrap: wrap;
             margin-top: auto;
         }
 
-        .project-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.2s ease;
+        .card-btn {
             flex: 1;
-            justify-content: center;
-            min-width: max-content;
-        }
-
-        .project-btn.primary {
-            background: linear-gradient(135deg, var(--accent), #1f6feb);
-            color: white;
-            border: none;
-        }
-
-        .project-btn.primary:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 16px var(--accent-glow);
-        }
-
-        .project-btn.secondary {
-            background: transparent;
-            color: var(--accent);
-            border: 1px solid rgba(88, 166, 255, 0.3);
-        }
-
-        .project-btn.secondary:hover {
-            background: rgba(88, 166, 255, 0.1);
-            border-color: var(--accent);
-        }
-
-        .project-btn svg {
-            width: 14px;
-            height: 14px;
-        }
-        
-        .view-all {
-            display: inline-block;
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 16px;
-            transition: opacity 0.2s;
-        }
-        
-        .view-all:hover {
-            opacity: 0.8;
-        }
-        
-        /* Learning Section */
-        .learning-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-        
-        .learning-item {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
-            box-shadow: 0 0 0 0 rgba(88,166,255,0), 0 8px 32px rgba(0,0,0,0);
-            transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .learning-item:hover {
-            transform: translateY(-4px);
-            border-color: rgba(88, 166, 255, 0.4);
-            box-shadow: 0 0 20px var(--glow-color), 0 8px 32px rgba(0,0,0,0.4);
-        }
-        
-        .learning-icon {
-            font-size: 40px;
-            margin-bottom: 12px;
-        }
-        
-        .learning-item h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text);
-        }
-        
-        .learning-item p {
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-        
-        .about-me p {
-            color: var(--text-secondary);
-            font-size: 18px;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            max-width: 780px;
-        }
-        
-        .about-me p:last-child {
-            margin-bottom: 0;
-        }
-        
-        .about-me a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        /* Contact Section */
-        .contact-section p {
-            color: var(--text-secondary);
-            font-size: 18px;
-            line-height: 1.8;
-            margin-bottom: 16px;
-        }
-
-        .contact-links {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 8px;
-        }
-
-        .contact-links a {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: var(--surface);
-            border: 1px solid var(--border);
+            justify-content: center;
+            padding: 10px 14px;
             border-radius: 10px;
-            color: var(--text);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-
-        .contact-links a:hover {
-            background: var(--accent);
-            color: white;
-            border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px var(--accent-glow);
-        }
-
-        .contact-links a svg {
-            width: 16px;
-            height: 16px;
-        }
-        
-        /* Credits Section */
-        .credits p {
-            color: var(--text-secondary);
-            font-size: 16px;
-            line-height: 1.8;
-        }
-        
-        .credits a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        /* Footer */
-        footer {
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 14px;
-            padding: 40px 24px;
-            border-top: 1px solid var(--border);
-        }
-        
-        footer a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-        
-        /* Focus styles */
-        a:focus-visible,
-        button:focus-visible,
-        [tabindex]:focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 3px;
-            border-radius: 4px;
-        }
-
-        /* Skip navigation */
-        .skip-nav {
-            position: absolute;
-            top: -100%;
-            left: 0;
-            padding: 12px 24px;
-            background: var(--accent);
-            color: var(--bg);
+            font-size: 13.5px;
             font-weight: 600;
-            z-index: 9999;
-            text-decoration: none;
+            color: #fff;
+            background: linear-gradient(135deg, var(--accent), #2f7ce0);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
         }
-        .skip-nav:focus {
+        .card-btn:hover { color: #fff; transform: translateY(-1px); box-shadow: 0 6px 18px rgba(88,166,255,0.35); }
+
+        .card-btn-ghost {
+            background: transparent;
+            color: var(--text-2);
+            border: 1px solid var(--line-strong);
+        }
+        .card-btn-ghost:hover { color: var(--text); background: rgba(255,255,255,0.05); box-shadow: none; }
+
+        .card-empty {
+            border-style: dashed;
+            background: transparent;
+            align-items: flex-start;
+        }
+        .card-empty:hover { transform: none; box-shadow: none; border-color: var(--line-strong); }
+        .card-empty:hover::before { opacity: 0; }
+
+        /* ==========================================================
+           Blog
+           ========================================================== */
+        .posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 44px;
+        }
+
+        .post {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--line);
+            background: var(--surface);
+            color: inherit;
+            transition: transform 0.28s cubic-bezier(0.22,1,0.36,1), border-color 0.28s ease, box-shadow 0.28s ease;
+        }
+
+        .post:hover { transform: translateY(-4px); border-color: rgba(88,166,255,0.38); box-shadow: var(--shadow-lg); color: inherit; }
+
+        .post-date {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        .post h3 { font-size: 17px; font-weight: 600; line-height: 1.4; letter-spacing: -0.01em; }
+        .post p { font-size: 13.5px; color: var(--text-2); flex-grow: 1; }
+        .post-more { font-size: 13px; font-weight: 600; color: var(--accent); }
+
+        /* ==========================================================
+           Learning / facts / contact
+           ========================================================== */
+        .learn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 44px;
+        }
+
+        .learn {
+            padding: 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--line);
+            background: var(--surface);
+            transition: border-color 0.28s ease, transform 0.28s ease;
+        }
+        .learn:hover { border-color: rgba(88,166,255,0.35); transform: translateY(-3px); }
+        .learn-icon { font-size: 26px; }
+        .learn h3 { margin-top: 14px; font-size: 17px; font-weight: 600; }
+        .learn p { margin-top: 6px; font-size: 13.5px; color: var(--text-2); }
+
+        .prose { max-width: 720px; }
+        .prose p { margin-top: 18px; font-size: 16.5px; line-height: 1.75; color: var(--text-2); }
+        .prose p:first-of-type { margin-top: 22px; }
+        .prose strong { color: var(--text); font-weight: 600; }
+
+        .facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+            gap: 14px;
+            margin-top: 36px;
+            max-width: 860px;
+        }
+
+        .fact {
+            padding: 16px 18px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--line);
+            background: var(--surface);
+        }
+
+        .fact-label {
+            display: block;
+            font-family: var(--mono);
+            font-size: 10.5px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+
+        .fact-value { display: block; margin-top: 6px; font-size: 15px; font-weight: 600; }
+
+        .contact-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+
+        /* ==========================================================
+           Footer
+           ========================================================== */
+        footer { border-top: 1px solid var(--line); padding: 56px 0 40px; }
+
+        .footer-inner { display: flex; flex-direction: column; gap: 22px; align-items: center; text-align: center; }
+
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 24px; }
+        .footer-links a { font-size: 14px; color: var(--text-2); }
+        .footer-links a:hover { color: var(--accent); }
+
+        .footer-note { font-size: 13px; color: var(--text-3); }
+
+        /* ==========================================================
+           Utilities
+           ========================================================== */
+        .skip {
+            position: absolute;
+            left: -9999px;
             top: 0;
+            z-index: 100;
+            padding: 12px 18px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 0 0 10px 0;
+            font-weight: 600;
         }
+        .skip:focus { left: 0; }
 
-        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
-        .revealed { opacity: 1; transform: translateY(0); }
+        .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1); }
+        .reveal.is-visible { opacity: 1; transform: none; }
 
-        #cursor-glow {
+        .to-top {
             position: fixed;
-            pointer-events: none;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(88,166,255,0.12) 0%, transparent 70%);
-            transform: translate(-50%, -50%);
+            right: 24px;
+            bottom: 24px;
+            z-index: 60;
+            display: grid;
+            place-items: center;
+            width: 44px; height: 44px;
+            border: 1px solid var(--line-strong);
+            border-radius: 12px;
+            background: rgba(16, 20, 26, 0.9);
+            backdrop-filter: blur(10px);
+            color: var(--text-2);
+            cursor: pointer;
             opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 1;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease, color 0.2s ease;
+        }
+        .to-top.is-visible { opacity: 1; pointer-events: auto; }
+        .to-top:hover { color: var(--accent); transform: translateY(-3px); }
+        .to-top svg { width: 18px; height: 18px; }
+
+        @media (max-width: 720px) {
+            .wrap, .nav-inner { width: min(var(--wrap), 100% - 36px); }
+            .hero { min-height: auto; padding: 128px 0 64px; }
+            section { padding: 64px 0; }
+            .stats { gap: 26px; }
+            .stat-value { font-size: 25px; }
+            .nav-links a:nth-child(2) { display: none; }
         }
 
-        /* Responsive */
-        @media (max-width: 640px) {
-            h1 {
-                font-size: clamp(36px, 12vw, 56px);
-            }
-            
-            .cta-button {
-                padding: 16px 32px;
-                font-size: 16px;
-            }
-            
-            .content {
-                padding: 60px 24px;
-            }
-            
-            .about-me h2, .credits h2, .contact-section h2 {
-                font-size: 24px;
-            }
-            
-            .about-me p {
-                font-size: 16px;
-            }
-
-            .back-to-top {
-                bottom: 20px;
-                right: 20px;
-            }
-        }
-        /* Respect prefers-reduced-motion */
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
-            .bg-gradient, .particle, .reveal, .scroll-indicator, .age-badge::before {
-                animation: none !important;
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
             }
-            h1, .tagline, .subtitle, .age-badge {
-                animation: none !important;
-                opacity: 1 !important;
-                transform: none !important;
-            }
-            .project-card, .learning-item {
-                transition: none !important;
-                transform: none !important;
-            }
-            .project-card:hover, .learning-item:hover {
-                transform: none !important;
-                box-shadow: none !important;
-            }
-            .scroll-indicator {
-                animation: none !important;
-            }
+            .reveal { opacity: 1; transform: none; }
         }
     </style>
 </head>
 <body>
-    <a href="#main-content" class="skip-nav">Skip to main content</a>
-    <div class="bg-gradient"></div>
-    <div class="particles" id="particles"></div>
+    <a href="#main" class="skip">Skip to content</a>
 
-    <!-- Hero Section (Full Screen) -->
-    <section class="hero" id="main-content">
-        <h1>QQ</h1>
-        <div class="age-badge">13 y/o Developer</div>
-        <p class="tagline">Hi! I'm QQ (施清荃), a developer building tools with AI</p>
-        
-        <!-- Tech Stack Badges -->
-        <div class="tech-stack">
-            <span class="badge">JavaScript</span>
-            <span class="badge">C++</span>
-            <span class="badge">Rust</span>
-            <span class="badge">Python</span>
-            <span class="badge">ESP32</span>
-            <span class="badge">Web</span>
+    <nav class="nav" id="nav" aria-label="Main">
+        <div class="nav-inner">
+            <div class="nav-links">
+                <a href="#work">Work</a>
+                <a href="#writing">Writing</a>
+                <a href="projects.html">All projects</a>
+            </div>
+            <div class="nav-links">
+                <a href="https://github.com/QQSHI13" class="nav-cta" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
         </div>
-        
-        <p class="subtitle">Assisted by <a href="#about" title="Nova is my AI assistant — we build projects together">Nova ☄️</a></p>
-        
-        <div class="button-row">
-            <a href="projects.html" class="cta-button">
-                View All Projects
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-            </a>
-            
-            <a href="blog/index.html" class="cta-button secondary">
-                Read Blog
-            </a>
+    </nav>
+
+    <div class="ambience" aria-hidden="true">
+        <span class="orb orb-1"></span>
+        <span class="orb orb-2"></span>
+    </div>
+
+    <main id="main">
+        <!-- ============ HERO ============ -->
+        <div class="wrap">
+            <header class="hero">
+                <h1 class="hero-title">QQ</h1>
+                <span class="hero-role">13 y/o developer</span>
+                <p class="hero-lede">
+                    I'm <strong>QQ</strong> (施清荃). I build web tools, desktop apps, and hardware
+                    projects — and I'd rather ship something useful than talk about it. Everything
+                    here is open source.
+                </p>
+
+                <div class="stack">
+                    <span>JavaScript</span>
+                    <span>TypeScript</span>
+                    <span>Python</span>
+                    <span>Rust</span>
+                    <span>C++</span>
+                    <span>C#</span>
+                    <span>ESP32</span>
+                </div>
+
+                <div class="hero-actions">
+                    <a href="#work" class="btn">
+                        See the work
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                    <a href="blog/index.html" class="btn btn-ghost">Read the blog</a>
+                </div>
+
+                <div class="hero-meta">
+                    <a class="icon-link" href="https://github.com/QQSHI13" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                    <a class="icon-link" href="mailto:qingquanshi65@gmail.com" aria-label="Email">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    </a>
+                    <span class="mono" style="font-size:12.5px;color:var(--text-3)">Beijing · UTC+8</span>
+                </div>
+
+                <div class="stats">
+                    <div>
+                        <span class="stat-value">7</span>
+                        <span class="stat-label">Live demos</span>
+                    </div>
+                    <div>
+                        <span class="stat-value">2</span>
+                        <span class="stat-label">Hardware builds</span>
+                    </div>
+                    <div>
+                        <span class="stat-value">9</span>
+                        <span class="stat-label">Languages</span>
+                    </div>
+                    <div>
+                        <span class="stat-value">100%</span>
+                        <span class="stat-label">Open source</span>
+                    </div>
+                </div>
+            </header>
         </div>
-        
-        <!-- Social Links -->
-        <div class="social-links">
-            <a href="https://www.github.com/QQSHI13" rel="noopener noreferrer" aria-label="GitHub">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-            </a>
-            <a href="mailto:qingquanshi65@gmail.com" aria-label="Email">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            </a>
-        </div>
-        
-        <!-- Quick stats -->
-        <div class="hero-stats">
-            <div><strong>7</strong><span>Live demos</span></div>
-            <div><strong>2</strong><span>Hardware builds</span></div>
-            <div><strong>9</strong><span>Languages</span></div>
-            <div><strong>100%</strong><span>Open source</span></div>
-        </div>
-        
-        <a href="#about" class="scroll-indicator" aria-label="Scroll to content">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-        </a>
-    </section>
-    
-    <!-- Content Section (Scrollable) -->
-    <section class="content" id="about">
-        <!-- Featured Projects -->
-        <section class="featured-projects">
-            <span class="eyebrow">Portfolio</span>
-            <h2>Tools &amp; Skills</h2>
-            <div class="projects-grid">
-                <div class="project-card reveal">
-                    <div class="project-icon">🧹</div>
-                    <h3><a href="https://www.npmjs.com/package/claw-clean" target="_blank" rel="noopener noreferrer">claw-clean</a></h3>
-                    <p>Interactive session cleanup tool for OpenClaw — TUI menu with arrow-key navigation</p>
-                    <div class="project-tags">
-                        <span>Bash</span>
-                        <span>CLI</span>
-                        <span>npm</span>
-                    </div>
-                    <div class="project-actions">
-                        <a href="https://www.npmjs.com/package/claw-clean" class="project-btn primary" target="_blank" rel="noopener noreferrer">npm ↗</a>
-                    </div>
-                </div>
-                
-                <div class="project-card reveal">
-                    <div class="project-icon">🖥️</div>
-                    <h3><a href="https://clawhub.com/skill/wincontrol" target="_blank" rel="noopener noreferrer">WinControl</a></h3>
-                    <p>AI remote control for Windows desktop — capture screenshots and control mouse/keyboard via HTTP API</p>
-                    <div class="project-tags">
-                        <span>Python</span>
-                        <span>AI Tool</span>
-                        <span>ClawHub</span>
-                    </div>
-                    <div class="project-actions">
-                        <a href="https://clawhub.com/skill/wincontrol" class="project-btn primary" target="_blank" rel="noopener noreferrer">Try it →</a>
-                    </div>
-                </div>
-                
-                <div class="project-card reveal">
-                    <div class="project-icon">🎯</div>
-                    <h3><a href="/24.html" rel="noopener noreferrer">24 Point Solver</a></h3>
-                    <p>Math puzzle game — make 24 using four numbers and basic operations</p>
-                    <div class="project-tags">
-                        <span>JavaScript</span>
-                        <span>Game</span>
-                    </div>
-                    <div class="project-actions">
-                        <a href="/24.html" class="project-btn primary" rel="noopener noreferrer">Play →</a>
-                    </div>
-                </div>
-                
-                <div class="project-card reveal">
-                    <div class="project-icon">⏱️</div>
-                    <h3><a href="https://qqshi13.github.io/flow/" rel="noopener noreferrer">Flow</a></h3>
-                    <p>Pomodoro timer with PWA support, keyboard shortcuts, and customizable settings</p>
-                    <div class="project-tags">
-                        <span>JavaScript</span>
-                        <span>PWA</span>
-                    </div>
-                    <div class="project-actions">
-                        <a href="https://qqshi13.github.io/flow/" class="project-btn primary" rel="noopener noreferrer">Try it →</a>
-                    </div>
-                </div>
-                
-                <div class="project-card reveal">
-                    <div class="project-icon">📦</div>
-                    <h3><a href="https://qqshi13.github.io/droptransfer/" rel="noopener noreferrer">DropTransfer</a></h3>
-                    <p>P2P file sharing with WebRTC, no server needed</p>
-                    <div class="project-tags">
-                        <span>WebRTC</span>
-                        <span>P2P</span>
-                    </div>
-                    <div class="project-actions">
-                        <a href="https://qqshi13.github.io/droptransfer/" class="project-btn primary" rel="noopener noreferrer">Try it →</a>
-                    </div>
-                </div>
-                
-                <div class="project-card reveal">
-                    <div class="project-icon">⏲️</div>
-                    <h3><a href="https://github.com/QQSHI13/M5Timer" target="_blank" rel="noopener noreferrer">M5Timer</a></h3>
-                    <p>Hardware Pomodoro timer for M5Capsule with web sync</p>
-                    <div class="project-tags">
-                        <span>C++</span>
-                        <span>ESP32</span>
-                    </div>
-                    <div class="project-actions">
-                        <a href="https://github.com/QQSHI13/M5Timer" class="project-btn secondary" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-                    </div>
+
+        <!-- ============ WORK ============ -->
+        <section id="work">
+            <div class="wrap">
+                <span class="kicker">Selected work</span>
+                <h2>Things I've built</h2>
+                <p class="section-lede">
+                    Web tools, desktop software, hardware, and libraries — most of it shipped and
+                    still running. Source for everything is on GitHub.
+                </p>
+
+                <div class="grid">
+                    <!-- DocsForge -->
+                    <article class="card reveal">
+                        <div class="card-top">
+                            <div class="card-icon" aria-hidden="true">📚</div>
+                            <span class="kind kind-library">Engine</span>
+                        </div>
+                        <h3><a href="https://qqshi13.github.io/docsforge" target="_blank" rel="noopener noreferrer">DocsForge</a></h3>
+                        <p>Self-contained documentation engine — one command turns Markdown into a fast, offline-capable site. Drop-in replacement for MkDocs + Material.</p>
+                        <div class="tags"><span>Python</span><span>Docs</span><span>PyPI</span></div>
+                        <div class="card-actions">
+                            <a href="https://qqshi13.github.io/docsforge" class="card-btn" target="_blank" rel="noopener noreferrer">Docs →</a>
+                            <a href="https://github.com/QQSHI13/docsforge" class="card-btn card-btn-ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
+                        </div>
+                    </article>
+
+                    <!-- BSOD Studio -->
+                    <article class="card reveal">
+                        <div class="card-top">
+                            <div class="card-icon" aria-hidden="true">🪟</div>
+                            <span class="kind kind-live">Web app</span>
+                        </div>
+                        <h3><a href="https://qqshi13.github.io/bsod-studio/" target="_blank" rel="noopener noreferrer">BSOD Studio</a></h3>
+                        <p>Design your own Blue Screen of Death — every era from NT 3.1 to the 2025 black screen, animated, exported as PNG or GIF.</p>
+                        <div class="tags"><span>JavaScript</span><span>Canvas</span><span>PWA</span></div>
+                        <div class="card-actions">
+                            <a href="https://qqshi13.github.io/bsod-studio/" class="card-btn" target="_blank" rel="noopener noreferrer">Try it →</a>
+                        </div>
+                    </article>
+
+                    <!-- fox-agent -->
+                    <article class="card reveal">
+                        <div class="card-top">
+                            <div class="card-icon" aria-hidden="true">🤖</div>
+                            <span class="kind kind-tool">Dev tool</span>
+                        </div>
+                        <h3><a href="https://github.com/QQSHI13/fox-agent" target="_blank" rel="noopener noreferrer">fox-agent</a></h3>
+                        <p>TypeScript/Bun coding-agent harness — terminal agent with subagents, git worktrees, and MCP support.</p>
+                        <div class="tags"><span>TypeScript</span><span>CLI</span><span>AI</span></div>
+                        <div class="card-actions">
+                            <a href="https://github.com/QQSHI13/fox-agent" class="card-btn card-btn-ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
+                        </div>
+                    </article>
+
+                    <!-- marz -->
+                    <article class="card reveal">
+                        <div class="card-top">
+                            <div class="card-icon" aria-hidden="true">🔎</div>
+                            <span class="kind kind-library">Library</span>
+                        </div>
+                        <h3><a href="https://github.com/QQSHI13/marz" target="_blank" rel="noopener noreferrer">marz</a></h3>
+                        <p>Offline-first search engine with first-class CJK support — no segmentation dictionaries, with WASM, Python, and JS bindings.</p>
+                        <div class="tags"><span>Rust</span><span>WASM</span><span>Search</span></div>
+                        <div class="card-actions">
+                            <a href="https://github.com/QQSHI13/marz" class="card-btn card-btn-ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
+                        </div>
+                    </article>
+
+                    <!-- DropTransfer -->
+                    <article class="card reveal">
+                        <div class="card-top">
+                            <div class="card-icon" aria-hidden="true">📦</div>
+                            <span class="kind kind-live">Web app</span>
+                        </div>
+                        <h3><a href="https://qqshi13.github.io/droptransfer/" target="_blank" rel="noopener noreferrer">DropTransfer</a></h3>
+                        <p>P2P file sharing over WebRTC — send files straight between two browsers, no server and no upload.</p>
+                        <div class="tags"><span>WebRTC</span><span>P2P</span></div>
+                        <div class="card-actions">
+                            <a href="https://qqshi13.github.io/droptransfer/" class="card-btn" target="_blank" rel="noopener noreferrer">Try it →</a>
+                        </div>
+                    </article>
+
+                    <!-- Flow -->
+                    <article class="card reveal">
+                        <div class="card-top">
+                            <div class="card-icon" aria-hidden="true">⏱️</div>
+                            <span class="kind kind-live">Web app</span>
+                        </div>
+                        <h3><a href="https://qqshi13.github.io/flow/" target="_blank" rel="noopener noreferrer">Flow</a></h3>
+                        <p>Minimal Pomodoro timer and clock with keyboard shortcuts, a progress ring, and PWA support.</p>
+                        <div class="tags"><span>JavaScript</span><span>PWA</span></div>
+                        <div class="card-actions">
+                            <a href="https://qqshi13.github.io/flow/" class="card-btn" target="_blank" rel="noopener noreferrer">Try it →</a>
+                        </div>
+                    </article>
+
+                    <!-- Tools Suite -->
+                    <article class="card reveal">
+                        <div class="card-top">
+                            <div class="card-icon" aria-hidden="true">🧰</div>
+                            <span class="kind kind-live">Web tools</span>
+                        </div>
+                        <h3><a href="https://qqshi13.github.io/tools-suite/" target="_blank" rel="noopener noreferrer">Tools Suite</a></h3>
+                        <p>A pile of developer utilities in one place — API tester, JSON viewer, JWT decoder, regex tester, diff viewer and more.</p>
+                        <div class="tags"><span>JavaScript</span><span>Utilities</span></div>
+                        <div class="card-actions">
+                            <a href="https://qqshi13.github.io/tools-suite/" class="card-btn" target="_blank" rel="noopener noreferrer">Try it →</a>
+                        </div>
+                    </article>
+
+                    <!-- CollaBoard -->
+                    <article class="card reveal">
+                        <div class="card-top">
+                            <div class="card-icon" aria-hidden="true">🎨</div>
+                            <span class="kind kind-live">Web app</span>
+                        </div>
+                        <h3><a href="https://qqshi13.github.io/collaboard/" target="_blank" rel="noopener noreferrer">CollaBoard</a></h3>
+                        <p>Real-time collaborative whiteboard that syncs directly between browsers — no server, no account.</p>
+                        <div class="tags"><span>JavaScript</span><span>WebRTC</span></div>
+                        <div class="card-actions">
+                            <a href="https://qqshi13.github.io/collaboard/" class="card-btn" target="_blank" rel="noopener noreferrer">Try it →</a>
+                        </div>
+                    </article>
+
+                    <!-- LifeLab -->
+                    <article class="card reveal">
+                        <div class="card-top">
+                            <div class="card-icon" aria-hidden="true">🦠</div>
+                            <span class="kind kind-live">Web app</span>
+                        </div>
+                        <h3><a href="https://qqshi13.github.io/lifelab/" target="_blank" rel="noopener noreferrer">LifeLab</a></h3>
+                        <p>Conway's Game of Life playground with 30+ starting patterns and a paint-your-own grid.</p>
+                        <div class="tags"><span>JavaScript</span><span>Canvas</span></div>
+                        <div class="card-actions">
+                            <a href="https://qqshi13.github.io/lifelab/" class="card-btn" target="_blank" rel="noopener noreferrer">Try it →</a>
+                        </div>
+                    </article>
+
+                    <!-- 24 Point Solver -->
+                    <article class="card reveal">
+                        <div class="card-top">
+                            <div class="card-icon" aria-hidden="true">🎯</div>
+                            <span class="kind kind-live">Web app</span>
+                        </div>
+                        <h3><a href="/24.html">24 Point Solver</a></h3>
+                        <p>Math puzzle game — make 24 out of four numbers using the four basic operations.</p>
+                        <div class="tags"><span>JavaScript</span><span>Game</span></div>
+                        <div class="card-actions">
+                            <a href="/24.html" class="card-btn">Play →</a>
+                        </div>
+                    </article>
+
+                    <!-- M5Timer -->
+                    <article class="card reveal">
+                        <div class="card-top">
+                            <div class="card-icon" aria-hidden="true">⏲️</div>
+                            <span class="kind kind-hardware">Hardware</span>
+                        </div>
+                        <h3><a href="https://github.com/QQSHI13/M5Timer" target="_blank" rel="noopener noreferrer">M5Timer</a></h3>
+                        <p>Physical Pomodoro timer on an M5Capsule — LED, buzzer, RTC, and configuration over Web Serial.</p>
+                        <div class="tags"><span>C++</span><span>ESP32</span></div>
+                        <div class="card-actions">
+                            <a href="https://github.com/QQSHI13/M5Timer" class="card-btn card-btn-ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
+                        </div>
+                    </article>
+
+                    <!-- Quick Notes -->
+                    <article class="card reveal">
+                        <div class="card-top">
+                            <div class="card-icon" aria-hidden="true">📝</div>
+                            <span class="kind kind-tool">Extension</span>
+                        </div>
+                        <h3><a href="https://github.com/QQSHI13/quick-notes" target="_blank" rel="noopener noreferrer">Quick Notes</a></h3>
+                        <p>Notes extension for the Windows Command Palette — published in the Microsoft CmdPal extensions gallery.</p>
+                        <div class="tags"><span>C#</span><span>Windows</span></div>
+                        <div class="card-actions">
+                            <a href="https://github.com/QQSHI13/quick-notes" class="card-btn card-btn-ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
+                        </div>
+                    </article>
+
+                    <!-- WinControl -->
+                    <article class="card reveal">
+                        <div class="card-top">
+                            <div class="card-icon" aria-hidden="true">🖥️</div>
+                            <span class="kind kind-tool">Tool</span>
+                        </div>
+                        <h3><a href="https://clawhub.com/skill/wincontrol" target="_blank" rel="noopener noreferrer">WinControl</a></h3>
+                        <p>Remote control for Windows desktops — screenshots plus mouse and keyboard control over a small HTTP API.</p>
+                        <div class="tags"><span>Python</span><span>HTTP API</span></div>
+                        <div class="card-actions">
+                            <a href="https://clawhub.com/skill/wincontrol" class="card-btn" target="_blank" rel="noopener noreferrer">Get it →</a>
+                        </div>
+                    </article>
+
+                    <!-- claw-clean -->
+                    <article class="card reveal">
+                        <div class="card-top">
+                            <div class="card-icon" aria-hidden="true">🧹</div>
+                            <span class="kind kind-tool">CLI tool</span>
+                        </div>
+                        <h3><a href="https://www.npmjs.com/package/claw-clean" target="_blank" rel="noopener noreferrer">claw-clean</a></h3>
+                        <p>Interactive session cleanup CLI — a TUI menu with arrow-key navigation, published on npm.</p>
+                        <div class="tags"><span>Bash</span><span>npm</span></div>
+                        <div class="card-actions">
+                            <a href="https://www.npmjs.com/package/claw-clean" class="card-btn" target="_blank" rel="noopener noreferrer">npm ↗</a>
+                        </div>
+                    </article>
+
+                    <!-- coming soon -->
+                    <article class="card card-empty">
+                        <div class="card-top">
+                            <div class="card-icon" aria-hidden="true">🔮</div>
+                            <span class="kind">In progress</span>
+                        </div>
+                        <h3>More coming soon</h3>
+                        <p>Always building something. Follow along on GitHub to see what's in the pipeline.</p>
+                        <div class="tags"><span>Open source</span><span>WIP</span></div>
+                        <div class="card-actions">
+                            <a href="https://github.com/QQSHI13?tab=repositories" class="card-btn card-btn-ghost" target="_blank" rel="noopener noreferrer">Follow ↗</a>
+                        </div>
+                    </article>
                 </div>
 
-                <div class="project-card reveal">
-                    <div class="project-icon">🪟</div>
-                    <h3><a href="https://qqshi13.github.io/bsod-studio/" rel="noopener noreferrer">BSOD Studio</a></h3>
-                    <p>Design your own Blue Screen of Death — every era, animated, PNG/GIF export</p>
-                    <div class="project-tags">
-                        <span>JavaScript</span>
-                        <span>Generator</span>
-                    </div>
-                    <div class="project-actions">
-                        <a href="https://qqshi13.github.io/bsod-studio/" class="project-btn primary" rel="noopener noreferrer">Try it →</a>
-                    </div>
+                <div class="section-foot">
+                    <a href="projects.html" class="mono" style="font-size:14px">All projects →</a>
                 </div>
+            </div>
+        </section>
 
-                <div class="project-card reveal">
-                    <div class="project-icon">🤖</div>
-                    <h3><a href="https://github.com/QQSHI13/fox-agent" target="_blank" rel="noopener noreferrer">fox-agent</a></h3>
-                    <p>TypeScript/Bun coding-agent harness — terminal agent with subagents, worktrees, and MCP support</p>
-                    <div class="project-tags">
-                        <span>TypeScript</span>
-                        <span>CLI</span>
-                        <span>AI</span>
-                    </div>
-                    <div class="project-actions">
-                        <a href="https://github.com/QQSHI13/fox-agent" class="project-btn secondary" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-                    </div>
+        <!-- ============ WRITING ============ -->
+        <section id="writing">
+            <div class="wrap">
+                <span class="kicker">Writing</span>
+                <h2>Latest from the blog</h2>
+                <p class="section-lede">Notes on what I'm building, how it works, and what broke along the way.</p>
+
+                <div class="posts" id="posts">
+                    <a class="post" href="blog/index.html">
+                        <span class="post-date">Blog</span>
+                        <h3>All posts</h3>
+                        <p>Browse everything I've written — project write-ups, workflow notes, and things I learned the hard way.</p>
+                        <span class="post-more">Read →</span>
+                    </a>
                 </div>
+            </div>
+        </section>
 
-                <div class="project-card reveal">
-                    <div class="project-icon">🔎</div>
-                    <h3><a href="https://github.com/QQSHI13/marz" target="_blank" rel="noopener noreferrer">marz</a></h3>
-                    <p>Offline-first search engine with first-class CJK support — no segmentation dictionaries, WASM/Python/JS bindings</p>
-                    <div class="project-tags">
-                        <span>Rust</span>
-                        <span>WASM</span>
-                        <span>Library</span>
-                    </div>
-                    <div class="project-actions">
-                        <a href="https://github.com/QQSHI13/marz" class="project-btn secondary" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-                    </div>
-                </div>
+        <!-- ============ LEARNING ============ -->
+        <section id="learning">
+            <div class="wrap">
+                <span class="kicker">Learning</span>
+                <h2>Currently learning</h2>
+                <p class="section-lede">What I'm digging into right now, alongside school and competitive programming.</p>
 
-                <div class="project-card reveal" style="opacity: 0.7;">
-                    <div class="project-icon">🔮</div>
-                    <h3>More Coming Soon</h3>
-                    <p>Always building something new. Check back for updates — or follow on GitHub to see work in progress!</p>
-                    <div class="project-tags">
-                        <span>Open Source</span>
-                        <span>WIP</span>
+                <div class="learn-grid">
+                    <div class="learn reveal">
+                        <div class="learn-icon" aria-hidden="true">🦀</div>
+                        <h3>Rust</h3>
+                        <p>Systems programming and WebAssembly</p>
                     </div>
-                    <div class="project-actions">
-                        <a href="https://github.com/QQSHI13?tab=repositories" class="project-btn secondary" target="_blank" rel="noopener noreferrer">Follow ↗</a>
+                    <div class="learn reveal">
+                        <div class="learn-icon" aria-hidden="true">🧠</div>
+                        <h3>AI / ML</h3>
+                        <p>LLMs, fine-tuning, and agent systems</p>
+                    </div>
+                    <div class="learn reveal">
+                        <div class="learn-icon" aria-hidden="true">🔧</div>
+                        <h3>Embedded</h3>
+                        <p>ESP32, sensors, and IoT projects</p>
+                    </div>
+                    <div class="learn reveal">
+                        <div class="learn-icon" aria-hidden="true">🧩</div>
+                        <h3>Algorithms</h3>
+                        <p>Competitive programming — graphs, DP, data structures</p>
                     </div>
                 </div>
             </div>
-            
-            <a href="projects.html" class="view-all">View all projects →</a>
-        </section>
-        
-        <!-- What I'm Learning -->
-        <section class="learning">
-            <span class="eyebrow">Learning</span>
-            <h2>Currently Learning</h2>
-            <div class="learning-grid">
-                <div class="learning-item reveal">
-                    <div class="learning-icon">🦀</div>
-                    <h3>Rust</h3>
-                    <p>Systems programming and WebAssembly</p>
-                </div>
-                <div class="learning-item reveal">
-                    <div class="learning-icon">🧠</div>
-                    <h3>AI/ML</h3>
-                    <p>LLMs, fine-tuning, and agent systems</p>
-                </div>
-                <div class="learning-item reveal">
-                    <div class="learning-icon">🔧</div>
-                    <h3>Embedded</h3>
-                    <p>ESP32, sensors, and IoT projects</p>
-                </div>
-            </div>
-        </section>
-        
-        <section class="about-me reveal">
-            <span class="eyebrow">About</span>
-            <h2>About Me</h2>
-            <p>I create web tools, desktop apps, and hardware projects that solve real problems. From Pomodoro timers to P2P file sharing, I love turning ideas into working products.</p>
-            <p>I use a dual-boot setup with Windows and Ubuntu, and I love exploring new technologies. My goal is to create tools that make people's lives easier.</p>
-            <p>I work with <a href="#about" title="Nova is my AI assistant">Nova ☄️</a> (my AI assistant) to build projects faster and learn along the way.</p>
         </section>
 
-        <section class="contact-section reveal">
-            <span class="eyebrow">Contact</span>
-            <h2>Get In Touch</h2>
-            <p>Want to collaborate, have feedback, or just want to say hi? I'm always open to chatting about tech, projects, or ideas.</p>
-            <div class="contact-links">
-                <a href="mailto:qingquanshi65@gmail.com">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    Email Me
-                </a>
-                <a href="https://github.com/QQSHI13" target="_blank" rel="noopener noreferrer">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                </a>
+        <!-- ============ ABOUT ============ -->
+        <section id="about">
+            <div class="wrap">
+                <span class="kicker">About</span>
+                <h2>About me</h2>
+
+                <div class="prose">
+                    <p>
+                        I'm 13 and I build things that solve real problems — from a Pomodoro timer I
+                        could clip to my desk to a documentation engine that replaced a stack of
+                        dependencies with one command.
+                    </p>
+                    <p>
+                        I work on a <strong>Windows and Ubuntu dual-boot</strong> setup, usually in the
+                        terminal, and I like the parts of engineering where you have to understand why
+                        something is slow or broken rather than work around it.
+                    </p>
+                    <p>
+                        Everything I publish is <strong>GPL-3.0</strong> and built with a lot of
+                        curiosity — and help from <strong>Nova ☄️</strong>, my AI assistant.
+                    </p>
+                </div>
+
+                <div class="facts">
+                    <div class="fact reveal">
+                        <span class="fact-label">Age</span>
+                        <span class="fact-value">13</span>
+                    </div>
+                    <div class="fact reveal">
+                        <span class="fact-label">Where</span>
+                        <span class="fact-value">Beijing, China</span>
+                    </div>
+                    <div class="fact reveal">
+                        <span class="fact-label">Setup</span>
+                        <span class="fact-value">Windows + Ubuntu</span>
+                    </div>
+                    <div class="fact reveal">
+                        <span class="fact-label">License</span>
+                        <span class="fact-value">GPL-3.0</span>
+                    </div>
+                </div>
             </div>
         </section>
-        
-        <section class="credits">
-            <h2>Credits</h2>
-            <p>Built with ❤️ by QQ & Nova ☄️ · Docs powered by <a href="https://qqshi13.github.io/docsforge" target="_blank" rel="noopener noreferrer">DocsForge</a></p>
+
+        <!-- ============ CONTACT ============ -->
+        <section id="contact">
+            <div class="wrap">
+                <span class="kicker">Contact</span>
+                <h2>Get in touch</h2>
+                <p class="section-lede">
+                    Questions, feedback, or want to collaborate? Email is the fastest way to reach me.
+                </p>
+
+                <div class="contact-links">
+                    <a href="mailto:qingquanshi65@gmail.com" class="btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        Email me
+                    </a>
+                    <a href="https://github.com/QQSHI13" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                </div>
+            </div>
         </section>
-    </section>
-    
+    </main>
+
     <footer>
-        <p>&copy; 2026 QQ. All rights reserved. · <a href="mailto:qingquanshi65@gmail.com">qingquanshi65@gmail.com</a></p>
+        <div class="wrap footer-inner">
+            <nav class="footer-links" aria-label="Footer">
+                <a href="#work">Work</a>
+                <a href="#writing">Writing</a>
+                <a href="projects.html">All projects</a>
+                <a href="blog/index.html">Blog</a>
+                <a href="https://github.com/QQSHI13" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="mailto:qingquanshi65@gmail.com">Email</a>
+            </nav>
+            <p class="footer-note">
+                © 2026 QQ (施清荃) · GPL-3.0 · Built with
+                <a href="https://qqshi13.github.io/docsforge" target="_blank" rel="noopener noreferrer">DocsForge</a>
+                and Nova ☄️
+            </p>
+        </div>
     </footer>
-    
-    <!-- Back to Top Button -->
-    <button class="back-to-top" id="backToTop" aria-label="Back to top">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+    <button class="to-top" id="toTop" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <polyline points="18 15 12 9 6 15"></polyline>
         </svg>
     </button>
 
-    <div id="cursor-glow"></div>
     <script>
-    // Floating particles
-    const particlesContainer = document.getElementById('particles');
-    for (let i = 0; i < 20; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 15 + 's';
-        particle.style.animationDuration = (10 + Math.random() * 10) + 's';
-        particlesContainer.appendChild(particle);
-    }
+    (function () {
+        var nav = document.getElementById('nav');
+        var toTop = document.getElementById('toTop');
 
-    // Cursor glow
-    const glow = document.getElementById('cursor-glow');
-    document.addEventListener('mousemove', e => {
-        glow.style.left = e.clientX + 'px';
-        glow.style.top = e.clientY + 'px';
-        glow.style.opacity = '1';
-    });
-    document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
-
-    // Scroll reveal
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                e.target.classList.add('revealed');
-                observer.unobserve(e.target);
-            }
-        });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    
-    // Back to top button
-    const backToTop = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 500) {
-            backToTop.classList.add('visible');
-        } else {
-            backToTop.classList.remove('visible');
+        /* --- nav background + back-to-top visibility --- */
+        function onScroll() {
+            nav.classList.toggle('scrolled', window.scrollY > 20);
+            toTop.classList.toggle('is-visible', window.scrollY > 600);
+            spy();
         }
-    });
-    backToTop.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-    
-    // Service Worker for PWA
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js')
-            .then(function(reg) { console.log('SW registered:', reg.scope); })
-            .catch(function(err) { console.error('SW registration failed:', err); });
-    }
-</script>
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        toTop.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        /* --- scroll reveal --- */
+        var revealables = document.querySelectorAll('.reveal');
+        if ('IntersectionObserver' in window) {
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        io.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+            revealables.forEach(function (el) { io.observe(el); });
+        } else {
+            revealables.forEach(function (el) { el.classList.add('is-visible'); });
+        }
+
+        /* --- active nav link --- */
+        var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
+        var sections = navLinks
+            .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+            .filter(Boolean);
+
+        function spy() {
+            var pos = window.scrollY + 120;
+            var current = null;
+            sections.forEach(function (s) { if (s.offsetTop <= pos) current = s.id; });
+            navLinks.forEach(function (a) {
+                a.classList.toggle('is-active', a.getAttribute('href') === '#' + current);
+            });
+        }
+
+        /* --- latest posts from the blog feed --- */
+        var posts = document.getElementById('posts');
+        var fallback = posts.innerHTML;
+
+        function render(items) {
+            if (!items.length) return;
+            posts.innerHTML = items.map(function (p) {
+                var date = new Date(p.date);
+                var label = isNaN(date) ? '' : date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+                return '<a class="post" href="' + p.link + '">' +
+                       '<span class="post-date">' + label + '</span>' +
+                       '<h3>' + p.title + '</h3>' +
+                       '<p>' + p.summary + '</p>' +
+                       '<span class="post-more">Read →</span></a>';
+            }).join('');
+        }
+
+        fetch('blog/feed_rss_created.xml')
+            .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error('feed')); })
+            .then(function (xml) {
+                var doc = new DOMParser().parseFromString(xml, 'application/xml');
+                var items = Array.prototype.slice.call(doc.querySelectorAll('item')).slice(0, 3);
+                if (!items.length) throw new Error('empty');
+                render(items.map(function (item) {
+                    var get = function (tag) {
+                        var node = item.querySelector(tag);
+                        return node ? node.textContent.trim() : '';
+                    };
+                    return {
+                        title: get('title'),
+                        link: get('link').replace(/^https?:\/\/[^/]+/, ''),
+                        date: get('pubDate'),
+                        summary: get('description').replace(/<[^>]+>/g, '').slice(0, 140) + '…'
+                    };
+                }));
+            })
+            .catch(function () { posts.innerHTML = fallback; });
+
+        onScroll();
+
+        /* --- service worker (offline support) --- */
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(function () {});
+        }
+    })();
+    </script>
 </body>
 </html>
