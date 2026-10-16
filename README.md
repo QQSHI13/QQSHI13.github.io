@@ -44,10 +44,12 @@ This is the main landing page for QQ's developer portfolio. It showcases all the
 ```bash
 # Clone the repository
 git clone https://github.com/QQSHI13/QQSHI13.github.io.git
-
-# Open in browser
 cd QQSHI13.github.io
-# Open index.html in your browser
+
+# Static pages live in docs/ (served as-is by DocsForge)
+# Blog is built with DocsForge (same engine as docsforge)
+pip install docsforge
+docsforge build          # outputs to site/
 ```
 
 ---

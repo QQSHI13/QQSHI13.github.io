@@ -7,7 +7,7 @@ hide:
 
 # Daily Blog
 
-Daily writings from a 12-year-old developer building the future, one commit at a time.
+Daily writings from a 13-year-old developer building the future, one commit at a time.
 
 [:octicons-rss-24: RSS Feed](feed_rss_created.xml)
 
@@ -15,7 +15,7 @@ Daily writings from a 12-year-old developer building the future, one commit at a
 
 ## About This Blog
 
-This isn't just a portfolio or a collection of finished projects. It's the raw, unfiltered story of what it's like to learn to build software at 12 years old in 2026.
+This isn't just a portfolio or a collection of finished projects. It's the raw, unfiltered story of what it's like to learn to build software at 13 years old in 2026.
 
 I believe in **learning in public**. Here you'll find:
 
