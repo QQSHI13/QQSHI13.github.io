@@ -19,9 +19,14 @@
     <meta property="og:description" content="13-year-old developer building web tools, desktop apps, and hardware projects.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://qqshi13.github.io/">
-    <meta name="twitter:card" content="summary">
+    <meta property="og:image" content="https://qqshi13.github.io/assets/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="QQ (施清荃)">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="QQ (施清荃) — 13 y/o Developer | Web, Hardware & AI Tools">
     <meta name="twitter:description" content="13-year-old developer building web tools, desktop apps, and hardware projects.">
+    <meta name="twitter:image" content="https://qqshi13.github.io/assets/og.png">
     <title>QQ (施清荃) — 13 y/o Developer | Web, Hardware & AI Tools</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%2358a6ff'/%3E%3C/svg%3E">
     <link rel="manifest" href="manifest.json">
@@ -29,6 +34,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "QQ",
+      "alternateName": "施清荃",
+      "url": "https://qqshi13.github.io/",
+      "email": "mailto:qingquanshi65@gmail.com",
+      "jobTitle": "Developer",
+      "description": "13-year-old developer building web tools, desktop apps, hardware projects and developer tooling.",
+      "knowsAbout": ["JavaScript", "TypeScript", "Python", "Rust", "C++", "ESP32"],
+      "sameAs": ["https://github.com/QQSHI13"]
+    }
+    </script>
     <style>
         /* ==========================================================
            Design tokens
@@ -670,6 +689,19 @@
         .to-top:hover { color: var(--accent); transform: translateY(-3px); }
         .to-top svg { width: 18px; height: 18px; }
 
+        /* thin reading-progress bar */
+        .progress {
+            position: fixed;
+            top: 0; left: 0;
+            z-index: 70;
+            width: 100%;
+            height: 2px;
+            transform: scaleX(0);
+            transform-origin: 0 50%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            transition: opacity 0.3s ease;
+        }
+
         @media (max-width: 720px) {
             .wrap, .nav-inner { width: min(var(--wrap), 100% - 36px); }
             .hero { min-height: auto; padding: 128px 0 64px; }
@@ -710,6 +742,8 @@
         <span class="orb orb-1"></span>
         <span class="orb orb-2"></span>
     </div>
+
+    <div class="progress" id="progress" aria-hidden="true"></div>
 
     <main id="main">
         <!-- ============ HERO ============ -->
@@ -1149,11 +1183,14 @@
     (function () {
         var nav = document.getElementById('nav');
         var toTop = document.getElementById('toTop');
+        var bar = document.getElementById('progress');
 
-        /* --- nav background + back-to-top visibility --- */
+        /* --- nav background + progress + back-to-top --- */
         function onScroll() {
             nav.classList.toggle('scrolled', window.scrollY > 20);
             toTop.classList.toggle('is-visible', window.scrollY > 600);
+            var max = document.documentElement.scrollHeight - window.innerHeight;
+            bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(window.scrollY / max, 1) : 0) + ')';
             spy();
         }
         window.addEventListener('scroll', onScroll, { passive: true });

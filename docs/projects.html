@@ -66,7 +66,7 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 60px 24px;
+            padding: 132px 24px 60px;
         }
         
         /* Header */
@@ -366,23 +366,112 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ---- shared nav with the homepage redesign ---- */
+        .nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 50;
+            border-bottom: 1px solid transparent;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        .nav.scrolled {
+            background: rgba(7, 9, 12, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom-color: var(--border);
+        }
+        .nav-inner {
+            width: min(1200px, 100% - 48px);
+            margin-inline: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 18px 0;
+        }
+        .nav-links { display: flex; align-items: center; gap: 4px; }
+        .nav-links a {
+            padding: 8px 14px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease, background 0.2s ease;
+        }
+        .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+        .nav-links a.is-active { color: var(--text); background: rgba(255,255,255,0.06); }
+        .nav-links a.nav-cta {
+            color: var(--accent);
+            border: 1px solid rgba(88,166,255,0.32);
+            margin-left: 6px;
+        }
+        .nav-links a.nav-cta:hover { background: rgba(88,166,255,0.12); color: var(--accent); }
+
+        .progress {
+            position: fixed;
+            top: 0; left: 0;
+            z-index: 70;
+            width: 100%;
+            height: 2px;
+            transform: scaleX(0);
+            transform-origin: 0 50%;
+            background: linear-gradient(90deg, var(--accent), #a371f7);
+        }
+
+        .page-head { margin-bottom: 40px; }
+        .kicker {
+            display: block;
+            margin-bottom: 12px;
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 11.5px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+        .page-head h1 {
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 700;
+            letter-spacing: -0.035em;
+            line-height: 1.08;
+        }
+        .page-head p {
+            max-width: 620px;
+            margin-top: 14px;
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+        @media (max-width: 640px) {
+            .container { padding: 116px 18px 48px; }
+            .nav-inner { width: calc(100% - 32px); }
+            .nav-links a:nth-child(2) { display: none; }
+        }
     </style>
 </head>
 <body>
     <a href="#main-content" class="skip-nav">Skip to main content</a>
     <div class="bg-gradient"></div>
+    <div class="progress" id="progress" aria-hidden="true"></div>
+
+    <nav class="nav" id="nav" aria-label="Main">
+        <div class="nav-inner">
+            <div class="nav-links">
+                <a href="/">Work</a>
+                <a href="/blog/">Writing</a>
+                <a href="projects.html" class="is-active">All projects</a>
+            </div>
+            <div class="nav-links">
+                <a href="https://github.com/QQSHI13" class="nav-cta" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+        </div>
+    </nav>
 
     <div class="container" id="main-content">
-        <header class="header">
-            <a href="/" class="back-link">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
-                Back
-            </a>
-            <h1 class="header-title">All Projects</h1>
-            <div class="header-right"></div>
+        <header class="page-head">
+            <span class="kicker">Everything</span>
+            <h1>All projects</h1>
+            <p>The full list — live web apps, hardware builds, libraries, and dev tooling. Search it, or filter by what you need.</p>
         </header>
         
         <div class="search-box">
@@ -663,11 +752,24 @@
         </div>
         
         <footer>
-            <p>Built with ❤️ by <a href="https://github.com/QQSHI13" rel="noopener noreferrer">QQ</a> & Nova ☄️ · Docs powered by <a href="https://qqshi13.github.io/docsforge" target="_blank" rel="noopener noreferrer">DocsForge</a></p>
+            <p>© 2026 <a href="https://github.com/QQSHI13" rel="noopener noreferrer">QQ</a> (施清荃) · GPL-3.0 · Built with <a href="https://qqshi13.github.io/docsforge" target="_blank" rel="noopener noreferrer">DocsForge</a> and Nova ☄️</p>
         </footer>
     </div>
     
     <div id="cursor-glow"></div>
+    <script>
+    (function () {
+        var nav = document.getElementById('nav');
+        var bar = document.getElementById('progress');
+        function onScroll() {
+            nav.classList.toggle('scrolled', window.scrollY > 20);
+            var max = document.documentElement.scrollHeight - window.innerHeight;
+            bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(window.scrollY / max, 1) : 0) + ')';
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
     <script>
         // Cursor glow
         const glow = document.getElementById('cursor-glow');
